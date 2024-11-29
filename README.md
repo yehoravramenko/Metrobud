@@ -11,6 +11,7 @@ Metrobud uses its own custom build system implemented in Bash scripting language
     ./build.sh
 
 ***Avaliable commands***
+
 To build a release version:
 
     ./build.sh
