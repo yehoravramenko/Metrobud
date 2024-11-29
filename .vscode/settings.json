@@ -1,0 +1,10 @@
+{
+    "editor.tabSize": 2,
+    "clangd.arguments": [
+        "--enable-config",
+        "--header-insertion=never"
+    ],
+    // "clangd.fallbackFlags": [
+    //     "--include-dir=./include"
+    // ]
+}
