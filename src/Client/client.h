@@ -1,10 +1,15 @@
 #pragma once
+#include "../common.h"
 
-typedef struct _Client {
+typedef struct _AuraClient {
+  GLFWwindow *window;
+  bool isRunning;
+} _AuraClient;
 
-} _Client;
+typedef _AuraClient *AuraClient;
 
-typedef _Client *Client;
+AuraClient Client();
 
 void Client_Init();
-void
+void Client_Update();
+void Client_Exit();
