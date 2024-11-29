@@ -12,6 +12,16 @@
 const int W_WIDTH = 800;
 const int W_HEIGHT = 600;
 
+float vertices[] = {
+    // positions          // texture coords
+    0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
+    0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+    -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // top left
+};
+
+unsigned int VAO, VBO;
+
 int main(int argc, char **argv) {
   if (!glfwInit()) {
     ERR_MSG("Failed to initialize GLFW");
