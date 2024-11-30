@@ -8,33 +8,29 @@ float vertices[] = {
     -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // top left
 };
 
-AuraRenderer renderer;
+Renderer renderer;
 
-AuraRenderer Renderer() {
+Renderer g_Renderer() {
   return renderer;
 }
 
 void Renderer_SetClearColor(float R, float G, float B, float A) {
-  renderer->clearColor.R = R;
-  renderer->clearColor.G = G;
-  renderer->clearColor.B = B;
-  renderer->clearColor.A = A;
+  glClearColor(R, G, B, A);
 }
 
 void Renderer_SetClearMask(unsigned int mask) {
   renderer->clearMask = mask;
 }
 
-bool Renderer_Init(int viewportWidth, int viewportHeight) {
-  renderer = calloc(1, sizeof(_AuraRenderer));
+bool Renderer_Init(vec2 viewportSize) {
+  if (!gladLoadGL())
+    return false;
+
+  renderer = calloc(1, sizeof(_Renderer));
   Renderer_SetClearColor(0.0f, 0.5f, 0.0f, 0.0f);
   Renderer_SetClearMask(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  if (!gladLoadGL())
-    return false;
-  glViewport(0, 0, viewportWidth, viewportHeight);
-  glClearColor(renderer->clearColor.R, renderer->clearColor.G,
-               renderer->clearColor.B, renderer->clearColor.A);
+  glViewport(0, 0, viewportSize.x, viewportSize.y);
 
   return true;
 }

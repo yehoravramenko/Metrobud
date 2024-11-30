@@ -8,7 +8,7 @@ EXT=".exe"
 
 # Compiler settings
 CC=gcc                  # Compiler
-CFLAGS="-Wall -Wextra -Iinclude -Llib -g -std=c23"  # Compiler flags
+CFLAGS="-Wall -Wextra -Isrc -Iinclude -Llib -g -std=c23"  # Compiler flags
 LDFLAGS="-lglfw3dll -lopengl32 -lgdi32 bin/glad.dll"              # Linker flags
 
 # Ensure output directory exists
