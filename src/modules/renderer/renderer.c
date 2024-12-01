@@ -32,6 +32,9 @@ bool Renderer_Init(vec2 viewportSize) {
 
   glViewport(0, 0, viewportSize.x, viewportSize.y);
 
+  VertexBuffer_Generate(&(renderer->VBO->id));
+  VertexBuffer_Bind(renderer->VBO->id, GL_ARRAY_BUFFER);
+
   return true;
 }
 
