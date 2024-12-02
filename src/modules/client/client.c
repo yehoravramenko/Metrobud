@@ -29,5 +29,6 @@ void Client_Update() {
 }
 
 void Client_Exit() {
+  Renderer_Exit();
   free(client);
 }

@@ -32,8 +32,11 @@ bool Renderer_Init(vec2 viewportSize) {
 
   glViewport(0, 0, viewportSize.x, viewportSize.y);
 
-  VertexBuffer_Generate(&(renderer->VBO->id));
-  VertexBuffer_Bind(renderer->VBO->id, GL_ARRAY_BUFFER);
+  renderer->VBO = calloc(1, sizeof(_Buffer)); // TODO: Move calloc from here
+
+  Buffer_Generate(renderer->VBO);
+  Buffer_SetTarget(renderer->VBO, GL_ARRAY_BUFFER);
+  Buffer_Data(renderer->VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
   return true;
 }
@@ -43,5 +46,6 @@ void Renderer_Update() {
 }
 
 void Renderer_Exit() {
+  Buffer_Free(renderer->VBO);
   free(renderer);
 }

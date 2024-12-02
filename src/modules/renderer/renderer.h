@@ -1,12 +1,12 @@
 #pragma once
 
 #include <common.h>
-#include "vertexbuffer.h"
+#include "buffer.h"
 
 typedef struct _Renderer {
   unsigned int clearMask;
 
-  VertexBuffer VBO;
+  Buffer VBO;
   unsigned int VAO;
 } _Renderer;
 
