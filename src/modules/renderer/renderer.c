@@ -1,5 +1,7 @@
 #include "renderer.h"
 
+#define GLSL(src) "#version 460\n" #src
+
 float vertices[] = {
     // positions          // texture coords
     0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
@@ -7,6 +9,19 @@ float vertices[] = {
     -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
     -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // top left
 };
+
+// clang-format off
+
+const char *vertexShader = GLSL(
+layout(location = 0) in vec3 inPos;
+
+void main()
+{
+  gl_Position = vec4(inPos, 1.0);
+}
+);
+
+// clang-format on
 
 Renderer *renderer;
 
@@ -33,7 +48,7 @@ bool Renderer_Init(vec2 viewportSize) {
 
   glViewport(0, 0, viewportSize.x, viewportSize.y);
 
-  Buffer_Generate(&renderer->VBO, GL_ARRAY_BUFFER);
+  Buffer_New(&renderer->VBO, GL_ARRAY_BUFFER);
   Buffer_Data(&renderer->VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
   return true;

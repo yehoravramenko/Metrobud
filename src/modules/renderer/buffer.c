@@ -1,6 +1,6 @@
 #include "buffer.h"
 
-void Buffer_Generate(Buffer *self, unsigned int target) {
+void Buffer_New(Buffer *self, unsigned int target) {
   glGenBuffers(1, &self->id);
   self->target = target;
 }

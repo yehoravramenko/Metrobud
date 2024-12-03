@@ -1,3 +1,6 @@
+# Logfie in bin
+bin/*.log
+
 # Prerequisites
 *.d
 

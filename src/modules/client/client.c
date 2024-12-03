@@ -1,3 +1,4 @@
+#define DEBUG_LOG
 #include "client.h"
 #include <modules/window/window.h>
 #include <modules/renderer/renderer.h>
@@ -9,6 +10,11 @@ Client *g_Client() {
 }
 
 void Client_Init() {
+#ifndef DEBUG
+  Engine_InitLog();
+  DEBUG_MSG("METROBUD LOG\nLog started\n\n");
+#endif
+
   client = calloc(1, sizeof(Client));
 
   Window_Init(&(client->windowSize));

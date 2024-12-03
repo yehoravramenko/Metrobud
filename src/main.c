@@ -1,4 +1,3 @@
-#include "common.h"
 #include <modules/client/client.h>
 
 int main(int argc, char **argv) {
