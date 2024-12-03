@@ -2,13 +2,11 @@
 
 #include <common.h>
 
-typedef struct _Window {
+typedef struct Window {
   GLFWwindow *pWindow;
-} _Window;
+} Window;
 
-typedef _Window *Window;
-
-Window g_Window();
+Window *g_Window();
 
 void Window_Init(vec2 *windowSize);
 void Window_Update(bool *isRunning);

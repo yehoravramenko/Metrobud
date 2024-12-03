@@ -2,15 +2,12 @@
 
 #include <common.h>
 
-typedef struct _Buffer {
+typedef struct Buffer {
   unsigned int id;
   unsigned int target;
-} _Buffer;
+} Buffer;
 
-typedef _Buffer *Buffer;
-
-void Buffer_Generate(Buffer self);
-void Buffer_SetTarget(Buffer self, unsigned int target);
-void Buffer_Data(Buffer self, size_t size, const void *data,
+void Buffer_Generate(Buffer *self, unsigned int target);
+void Buffer_Data(Buffer *self, size_t size, const void *data,
                  unsigned int usage);
-void Buffer_Free(Buffer self);
+void Buffer_Free(Buffer *self);

@@ -8,9 +8,9 @@ float vertices[] = {
     -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // top left
 };
 
-Renderer renderer;
+Renderer *renderer;
 
-Renderer g_Renderer() {
+Renderer *g_Renderer() {
   return renderer;
 }
 
@@ -23,20 +23,18 @@ void Renderer_SetClearMask(unsigned int mask) {
 }
 
 bool Renderer_Init(vec2 viewportSize) {
-  if (!gladLoadGL())
-    return false;
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    ERR_MSG("Failed to initialize OpenGL");
+  }
 
-  renderer = calloc(1, sizeof(_Renderer));
+  renderer = calloc(1, sizeof(Renderer));
   Renderer_SetClearColor(0.0f, 0.5f, 0.0f, 0.0f);
   Renderer_SetClearMask(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glViewport(0, 0, viewportSize.x, viewportSize.y);
 
-  renderer->VBO = calloc(1, sizeof(_Buffer)); // TODO: Move calloc from here
-
-  Buffer_Generate(renderer->VBO);
-  Buffer_SetTarget(renderer->VBO, GL_ARRAY_BUFFER);
-  Buffer_Data(renderer->VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  Buffer_Generate(&renderer->VBO, GL_ARRAY_BUFFER);
+  Buffer_Data(&renderer->VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
   return true;
 }
@@ -46,6 +44,6 @@ void Renderer_Update() {
 }
 
 void Renderer_Exit() {
-  Buffer_Free(renderer->VBO);
+  Buffer_Free(&renderer->VBO);
   free(renderer);
 }

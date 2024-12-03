@@ -2,14 +2,14 @@
 #include <modules/window/window.h>
 #include <modules/renderer/renderer.h>
 
-Client client;
+Client *client;
 
-Client g_Client() {
+Client *g_Client() {
   return client;
 }
 
 void Client_Init() {
-  client = calloc(1, sizeof(_Client));
+  client = calloc(1, sizeof(Client));
 
   Window_Init(&(client->windowSize));
   DEBUG_MSG("window size is %f, %f", client->windowSize.x,

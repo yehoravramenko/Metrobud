@@ -3,9 +3,9 @@
 const int W_WIDTH = 800;
 const int W_HEIGHT = 600;
 
-Window window;
+Window *window;
 
-Window g_Window() {
+Window *g_Window() {
   return window;
 }
 
@@ -14,7 +14,7 @@ void Window_Init(vec2 *windowSize) {
     ERR_MSG("Failed to initialize GLFW");
   }
 
-  window = calloc(1, sizeof(_Window));
+  window = calloc(1, sizeof(Window));
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);

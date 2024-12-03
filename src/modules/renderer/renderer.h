@@ -3,16 +3,14 @@
 #include <common.h>
 #include "buffer.h"
 
-typedef struct _Renderer {
+typedef struct Renderer {
   unsigned int clearMask;
 
   Buffer VBO;
   unsigned int VAO;
-} _Renderer;
+} Renderer;
 
-typedef _Renderer *Renderer;
-
-Renderer g_Renderer();
+Renderer *g_Renderer();
 
 void Renderer_SetClearColor(float R, float G, float B, float A);
 void Renderer_SetClearMask(unsigned int mask);

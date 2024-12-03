@@ -2,14 +2,12 @@
 
 #include <common.h>
 
-typedef struct _Client {
+typedef struct Client {
   vec2 windowSize;
   bool isRunning;
-} _Client;
+} Client;
 
-typedef _Client *Client;
-
-Client g_Client();
+Client *g_Client();
 
 void Client_Init();
 void Client_Update();
