@@ -12,7 +12,7 @@ float vertices[] = {
 
 // clang-format off
 
-const char *vertexShader = GLSL(
+const char *vertexShader_src = GLSL(
 layout(location = 0) in vec3 inPos;
 
 void main()
@@ -21,9 +21,19 @@ void main()
 }
 );
 
+const char *fragmentShader_src = GLSL(
+out vec4 FragColor;
+
+void main()
+{
+  FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+}
+);
+
 // clang-format on
 
 Renderer *renderer;
+Shader shader;
 
 Renderer *g_Renderer() {
   return renderer;
@@ -51,6 +61,8 @@ bool Renderer_Init(vec2 viewportSize) {
   Buffer_New(&renderer->VBO, GL_ARRAY_BUFFER);
   Buffer_Data(&renderer->VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+  Shader_New(&shader, vertexShader_src, fragmentShader_src);
+
   return true;
 }
 
@@ -59,6 +71,7 @@ void Renderer_Update() {
 }
 
 void Renderer_Exit() {
+  Shader_Delete(&shader);
   Buffer_Free(&renderer->VBO);
   free(renderer);
 }

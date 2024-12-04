@@ -2,6 +2,7 @@
 
 #include <common.h>
 #include "buffer.h"
+#include "shader.h"
 
 typedef struct Renderer {
   unsigned int clearMask;
