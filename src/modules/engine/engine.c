@@ -16,7 +16,6 @@ void Engine_WriteLog(const char *format, ...) {
 
   va_start(args, format);
   vfprintf(debug_log_f, format, args);
-  fprintf(debug_log_f, "\n");
   va_end(args);
   fclose(debug_log_f);
 }

@@ -63,6 +63,8 @@ bool Renderer_Init(vec2 viewportSize) {
 
   Shader_New(&shader, vertexShader_src, fragmentShader_src);
 
+  ERR_MSG("test error!");
+
   return true;
 }
 
