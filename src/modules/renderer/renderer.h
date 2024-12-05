@@ -1,14 +1,16 @@
 #pragma once
 
 #include <common.h>
-#include "buffer.h"
-#include "shader.h"
+#include "wrapper/buffer.h"
+#include "wrapper/vertexarray.h"
+#include "wrapper/shader.h"
+#include "wrapper/opengl.h"
 
 typedef struct Renderer {
   unsigned int clearMask;
 
   Buffer VBO;
-  unsigned int VAO;
+  VertexArray VAO;
 } Renderer;
 
 Renderer *g_Renderer();

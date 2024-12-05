@@ -16,7 +16,7 @@ mkdir -p $OUTPUT_DIR
 
 # Find all .c files in the source directory
 SOURCES=$(find $SOURCE_DIR -name "*.c")
-echo $SOURCES
+# echo $SOURCES
 
 # Compile the project
 echo "Compiling..."

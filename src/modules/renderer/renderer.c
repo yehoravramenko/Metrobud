@@ -58,22 +58,34 @@ bool Renderer_Init(vec2 viewportSize) {
 
   glViewport(0, 0, viewportSize.x, viewportSize.y);
 
+  VertexArray_New(&renderer->VAO);
+  VertexArray_Bind(&renderer->VAO);
+
   Buffer_New(&renderer->VBO, GL_ARRAY_BUFFER);
   Buffer_Data(&renderer->VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
   Shader_New(&shader, vertexShader_src, fragmentShader_src);
 
-  ERR_MSG("test error!");
+  const unsigned int VERTEX_COORD_index = 0;
+  GL_VertexAttribPointer(VERTEX_COORD_index, 3, GL_FLOAT, 5 * sizeof(float),
+                         NULL);
+  GL_EnableVertexAttribArray(VERTEX_COORD_index);
+
+  VertexArray_Bind(0);
 
   return true;
 }
 
 void Renderer_Update() {
   glClear(renderer->clearMask);
+  Shader_Use(&shader);
+  VertexArray_Bind(&renderer->VAO);
+  glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 void Renderer_Exit() {
   Shader_Delete(&shader);
   Buffer_Free(&renderer->VBO);
+  VertexArray_Free(&renderer->VAO);
   free(renderer);
 }

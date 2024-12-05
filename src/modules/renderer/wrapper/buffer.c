@@ -8,6 +8,7 @@ void Buffer_New(Buffer *self, unsigned int target) {
 void Buffer_Data(Buffer *self, size_t size, const void *data,
                  unsigned int usage) {
   int currentID = 0;
+
   // Add 0x2 to get the binding of buffer (Thank you OpenGL specification!)
   glGetIntegerv(self->target + 0x0002, &currentID);
   DEBUG_MSG("Get buffer binding at 0x%x, currentID is %d",
