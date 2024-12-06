@@ -9,7 +9,7 @@ int _compileShader(unsigned int shaderType, const char *shaderSource) {
   glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(shader, 512, NULL, infoLog);
-    DEBUG_MSG("SHADER: Failed to compile shader:\n=>\t%s", infoLog);
+    ERR_MSG("SHADER: Failed to compile shader\nDetails:\n\n%s", infoLog);
   }
   return shader;
 }
@@ -32,7 +32,7 @@ void Shader_New(Shader *self, const char *vertexShaderSrc,
   glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(shaderProgram, 512, NULL, infoLog);
-    DEBUG_MSG("PROGRAM: Failed to compile program:\n=>\t%s", infoLog);
+    ERR_MSG("PROGRAM: Failed to compile program\nDetails:\n\n%s", infoLog);
   }
   self->id = shaderProgram;
   Shader_Use(self);

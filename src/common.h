@@ -16,7 +16,7 @@
   printf("\n");
 
 #define ERR_MSG(...)                                                           \
-  printf("ERROR\t"__VA_ARGS__);                                                \
+  printf("ENGINE ERROR\t"__VA_ARGS__);                                         \
   printf("\n");                                                                \
   exit(-1);
 #else
@@ -24,7 +24,7 @@
   Engine_WriteLog(__VA_ARGS__);                                                \
   Engine_WriteLog("\n");
 #define ERR_MSG(...)                                                           \
-  Engine_WriteLog("ERROR\t");                                                  \
+  Engine_WriteLog("ENGINE ERROR\t");                                           \
   Engine_WriteLog(__VA_ARGS__);                                                \
   Engine_WriteLog("\n");                                                       \
   exit(-1);

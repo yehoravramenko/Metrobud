@@ -2,13 +2,15 @@
 
 #define GLSL(src) "#version 460\n" #src
 
-float vertices[] = {
-    // positions          // texture coords
-    0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
-    0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-    -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // top left
-};
+// float vertices[] = {
+//     // positions          // texture coords
+//     0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
+//     0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+//     -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+//     -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // top left
+// };
+
+float vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
 
 // clang-format off
 
@@ -26,7 +28,7 @@ out vec4 FragColor;
 
 void main()
 {
-  FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+  FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }
 );
 
@@ -67,7 +69,9 @@ bool Renderer_Init(vec2 viewportSize) {
   Shader_New(&shader, vertexShader_src, fragmentShader_src);
 
   const unsigned int VERTEX_COORD_index = 0;
-  GL_VertexAttribPointer(VERTEX_COORD_index, 3, GL_FLOAT, 5 * sizeof(float),
+  // GL_VertexAttribPointer(VERTEX_COORD_index, 3, GL_FLOAT, 5 * sizeof(float),
+  //                        NULL);
+  GL_VertexAttribPointer(VERTEX_COORD_index, 3, GL_FLOAT, 3 * sizeof(float),
                          NULL);
   GL_EnableVertexAttribArray(VERTEX_COORD_index);
 
@@ -77,6 +81,11 @@ bool Renderer_Init(vec2 viewportSize) {
 }
 
 void Renderer_Update() {
+
+  // Probably we can't do vertex buffer binding implicitly, because there are
+  // cases when we need to it explicitly (for example here)
+  // TODO: Change buffer.c
+
   glClear(renderer->clearMask);
   Shader_Use(&shader);
   VertexArray_Bind(&renderer->VAO);
