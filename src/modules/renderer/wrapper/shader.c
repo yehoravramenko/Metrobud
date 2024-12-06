@@ -16,8 +16,6 @@ int _compileShader(unsigned int shaderType, const char *shaderSource) {
 
 void Shader_New(Shader *self, const char *vertexShaderSrc,
                 const char *fragmentShaderSrc) {
-  self = calloc(1, sizeof(Shader));
-
   int vertexShader = _compileShader(GL_VERTEX_SHADER, vertexShaderSrc);
   int fragmentShader = _compileShader(GL_FRAGMENT_SHADER, fragmentShaderSrc);
 

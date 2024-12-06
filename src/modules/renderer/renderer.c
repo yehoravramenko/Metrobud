@@ -55,7 +55,7 @@ bool Renderer_Init(vec2 viewportSize) {
   }
 
   renderer = calloc(1, sizeof(Renderer));
-  Renderer_SetClearColor(0.0f, 0.5f, 0.0f, 0.0f);
+  Renderer_SetClearColor(0.0f, 0.5f, 0.0f, 1.0f);
   Renderer_SetClearMask(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glViewport(0, 0, viewportSize.x, viewportSize.y);

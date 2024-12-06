@@ -1,7 +1,6 @@
 #include "vertexarray.h"
 
 void VertexArray_New(VertexArray *self) {
-  self = calloc(1, sizeof(VertexArray));
   glGenVertexArrays(1, &self->id);
 }
 
