@@ -1,6 +1,6 @@
 #include "shader.hpp"
 
-int _compileShader(unsigned int shaderType, const char *shaderSource) {
+int Shader::compileShader(unsigned int shaderType, const char *shaderSource) {
   int shader = glCreateShader(shaderType);
   glShaderSource(shader, 1, &shaderSource, NULL);
   glCompileShader(shader);
@@ -14,10 +14,9 @@ int _compileShader(unsigned int shaderType, const char *shaderSource) {
   return shader;
 }
 
-void Shader_New(Shader *self, const char *vertexShaderSrc,
-                const char *fragmentShaderSrc) {
-  int vertexShader = _compileShader(GL_VERTEX_SHADER, vertexShaderSrc);
-  int fragmentShader = _compileShader(GL_FRAGMENT_SHADER, fragmentShaderSrc);
+Shader::Shader(const char *vertexShaderSrc, const char *fragmentShaderSrc) {
+  int vertexShader = compileShader(GL_VERTEX_SHADER, vertexShaderSrc);
+  int fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentShaderSrc);
 
   unsigned int shaderProgram;
   shaderProgram = glCreateProgram();
@@ -32,18 +31,17 @@ void Shader_New(Shader *self, const char *vertexShaderSrc,
     glGetShaderInfoLog(shaderProgram, 512, NULL, infoLog);
     ERR_MSG("PROGRAM: Failed to compile program\nDetails:\n\n%s", infoLog);
   }
-  self->id = shaderProgram;
-  Shader_Use(self);
+  this->id = shaderProgram;
+  this->Use();
 
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
 }
 
-void Shader_Use(Shader *self) {
-  glUseProgram(self->id);
+void Shader::Use() {
+  glUseProgram(this->id);
 }
 
-void Shader_Delete(Shader *self) {
-  self->id = 0;
-  free(self);
+Shader::~Shader() {
+  this->id = 0;
 }

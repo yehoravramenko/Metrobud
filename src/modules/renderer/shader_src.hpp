@@ -1,5 +1,5 @@
 #pragma once
-#define SHADER_SOURCE const char *
+#define SHADER_SOURCE inline const char *
 #define GLSL(src) "#version 460\n" #src
 // clang-format off
 

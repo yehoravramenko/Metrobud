@@ -11,62 +11,46 @@
 
 float vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
 
-// clang-format on
+Shader *shader;
 
-Renderer *renderer;
-Shader shader;
-
-Renderer *g_Renderer() {
-  return renderer;
-}
-
-void Renderer_SetClearMask(unsigned int mask) {
-  renderer->clearMask = mask;
-}
-
-bool Renderer_Init(vec2 viewportSize) {
+Renderer::Renderer(vec2 &viewportSize) {
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     ERR_MSG("Failed to initialize OpenGL");
   }
 
-  renderer = calloc(1, sizeof(Renderer));
-  GL_SetClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-  Renderer_SetClearMask(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  this->clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
+  this->clearMask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT;
 
-  GL_Viewport((vec2){0, 0}, viewportSize);
+  GL::Viewport({0, 0}, viewportSize);
 
-  VertexArray_New(&renderer->VAO);
-  VertexArray_Bind(&renderer->VAO);
+  this->VAO = new VertexArray();
+  this->VAO->Bind();
 
-  Buffer_New(&renderer->VBO, GL_ARRAY_BUFFER);
-  Buffer_Data(&renderer->VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  this->VBO = new Buffer(GL_ARRAY_BUFFER);
+  this->VBO->Data(sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-  Shader_New(&shader, vertexShader_src, fragmentShader_src);
+  // Shader_New(&shader, vertexShader_src, fragmentShader_src);
+  shader = new Shader(vertexShader_src, fragmentShader_src);
 
   const unsigned int VERTEX_COORD_index = 0;
-  GL_VertexAttribPointer(VERTEX_COORD_index, 3, GL_FLOAT, 3 * sizeof(float),
-                         NULL);
-  GL_EnableVertexAttribArray(VERTEX_COORD_index);
-
-  VertexArray_Bind(0);
-
-  return true;
+  GL::VertexAttribPointer(VERTEX_COORD_index, 3, GL_FLOAT, 3 * sizeof(float),
+                          NULL);
+  GL::EnableVertexAttribArray(VERTEX_COORD_index);
 }
 
-void Renderer_Update() {
+void Renderer::Update() {
 }
 
-void Renderer_Render() {
-  GL_Clear(renderer->clearMask);
+void Renderer::Render() {
+  GL::Clear(this->clearMask);
 
-  Shader_Use(&shader);
-  VertexArray_Bind(&renderer->VAO);
-  GL_DrawArrays(GL_TRIANGLES, 0, 3);
+  shader->Use();
+  this->VAO->Bind();
+  GL::DrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void Renderer_Exit() {
-  Shader_Delete(&shader);
-  Buffer_Free(&renderer->VBO);
-  VertexArray_Free(&renderer->VAO);
-  free(renderer);
+Renderer::~Renderer() {
+  delete shader;
+  delete this->VBO;
+  delete this->VAO;
 }

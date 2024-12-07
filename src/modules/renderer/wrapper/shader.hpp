@@ -1,11 +1,14 @@
 #pragma once
 #include <common.hpp>
 
-typedef struct Shader {
-  unsigned int id;
-} Shader;
+class Shader {
+public:
+  Shader(const char *vertexShaderSrc, const char *fragmentShaderSrc);
+  void Use();
+  ~Shader();
 
-void Shader_New(Shader *self, const char *vertexShaderSrc,
-                const char *fragmentShaderSrc);
-void Shader_Use(Shader *self);
-void Shader_Delete(Shader *self);
+private:
+  unsigned int id;
+
+  int compileShader(unsigned int shaderType, const char *shaderSource);
+};

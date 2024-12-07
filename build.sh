@@ -8,7 +8,7 @@ EXT=".exe"
 
 # Compiler settings
 CC=g++                  # Compiler
-CFLAGS="-Wall -Wextra -Isrc -Iinclude -Llib -g -std=c++20"  # Compiler flags
+CFLAGS="-Wall -Wextra -Isrc -Iinclude -Llib -g -std=c++23"  # Compiler flags
 LDFLAGS="-lglfw3dll -lopengl32 -lgdi32 bin/glad.dll"              # Linker flags
 
 # Ensure output directory exists
@@ -40,5 +40,5 @@ fi
 echo "Build successful! Executable: $OUTPUT_DIR/$EXECUTABLE_NAME$EXT | [R]un?"
 read -r run_command
 if [ "$run_command" = "r" ]; then
-    ./$OUTPUT_DIR/$EXECUTABLE_NAME$EXT
+    cd $OUTPUT_DIR; ./$EXECUTABLE_NAME$EXT
 fi

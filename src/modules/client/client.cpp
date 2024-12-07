@@ -3,39 +3,30 @@
 #include <modules/window/window.hpp>
 #include <modules/renderer/renderer.hpp>
 
-Client *client;
+Window *window;
+Renderer *renderer;
 
-Client *g_Client() {
-  return client;
-}
-
-void Client_Init() {
+void Client::Init() {
 #ifndef DEBUG
   Engine_InitLog();
   DEBUG_MSG("METROBUD LOG\nLog started\n\n");
 #endif
 
-  client = calloc(1, sizeof(Client));
+  window = new Window();
+  DEBUG_MSG("window size is %f, %f", window->size.x, window->size.y);
 
-  Window_Init(&(client->windowSize));
-  DEBUG_MSG("window size is %f, %f", client->windowSize.x,
-            client->windowSize.y);
+  renderer = new Renderer(window->size);
 
-  if (!Renderer_Init(client->windowSize)) {
-    glfwTerminate();
-    ERR_MSG("Failed to initialize OpenGL Renderer");
-  }
-
-  client->isRunning = true;
+  Client::isRunning = true;
 }
 
-void Client_Update() {
-  Window_Update(&(client->isRunning));
-  Renderer_Update();
-  Renderer_Render();
+void Client::Update() {
+  window->Update(Client::isRunning);
+  renderer->Update();
+  renderer->Render();
 }
 
-void Client_Exit() {
-  Renderer_Exit();
-  free(client);
+void Client::Exit() {
+  delete window;
+  delete renderer;
 }

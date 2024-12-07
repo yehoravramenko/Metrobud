@@ -2,12 +2,12 @@
 
 #include <common.hpp>
 
-typedef struct Buffer {
+class Buffer {
+public:
+  Buffer(unsigned int target);
+  void Data(size_t size, const void *data, unsigned int usage);
+
+private:
   unsigned int id;
   unsigned int target;
-} Buffer;
-
-void Buffer_New(Buffer *self, unsigned int target);
-void Buffer_Data(Buffer *self, size_t size, const void *data,
-                 unsigned int usage);
-void Buffer_Free(Buffer *self);
+};

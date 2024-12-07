@@ -1,10 +1,11 @@
 #include <modules/client/client.hpp>
 
 int main(int argc, char **argv) {
-  Client_Init();
-  while (g_Client()->isRunning) {
-    Client_Update();
+  Client client;
+  client.Init();
+  while (client.isRunning) {
+    client.Update();
   }
-  Client_Exit();
+  client.Exit();
   return 0;
 }

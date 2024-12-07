@@ -1,5 +1,5 @@
 CompileFlags:
-  Add: ["-ID:\\yehoravramenko\\metrobud\\include", "-ID:\\yehoravramenko\\metrobud\\src", "-std=c23", "-Wall", "-xc"]
+  Add: ["-ID:\\yehoravramenko\\metrobud\\include", "-ID:\\yehoravramenko\\metrobud\\src", "-std=c++23", "-Wall", "-xc++"]
 
 Diagnostics:
   UnusedIncludes: None
