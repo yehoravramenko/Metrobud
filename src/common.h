@@ -13,7 +13,6 @@
 #ifdef DEBUG
 #define DEBUG_MSG(...)                                                         \
   printf("DEBUG MESSAGE\t"__VA_ARGS__);                                        \
-  printf(__VA_ARGS__);                                                         \
   printf("\n");
 
 #define ERR_MSG(...)                                                           \
