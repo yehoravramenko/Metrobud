@@ -12,6 +12,7 @@
 
 #ifdef DEBUG
 #define DEBUG_MSG(...)                                                         \
+  printf("DEBUG MESSAGE\t"__VA_ARGS__);                                        \
   printf(__VA_ARGS__);                                                         \
   printf("\n");
 
@@ -21,6 +22,7 @@
   exit(-1);
 #else
 #define DEBUG_MSG(...)                                                         \
+  Engine_WriteLog("DEBUG MESSAGE\t");                                          \
   Engine_WriteLog(__VA_ARGS__);                                                \
   Engine_WriteLog("\n");
 #define ERR_MSG(...)                                                           \

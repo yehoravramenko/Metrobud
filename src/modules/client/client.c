@@ -32,6 +32,7 @@ void Client_Init() {
 void Client_Update() {
   Window_Update(&(client->isRunning));
   Renderer_Update();
+  Renderer_Render();
 }
 
 void Client_Exit() {

@@ -20,4 +20,5 @@ void Renderer_SetClearMask(unsigned int mask);
 
 bool Renderer_Init(vec2 viewportSize);
 void Renderer_Update();
+void Renderer_Render();
 void Renderer_Exit();
