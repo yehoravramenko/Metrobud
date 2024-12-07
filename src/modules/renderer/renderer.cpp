@@ -1,5 +1,5 @@
-#include "renderer.h"
-#include "shader_src.h"
+#include "renderer.hpp"
+#include "shader_src.hpp"
 
 // float vertices[] = {
 //     // positions          // texture coords

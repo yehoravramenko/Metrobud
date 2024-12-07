@@ -1,8 +1,8 @@
 #pragma once
 
-#include "common.h"
-#include "vertexarray.h"
-#include "shader.h"
+#include "common.hpp"
+#include "vertexarray.hpp"
+#include "shader.hpp"
 
 void GL_Viewport(vec2 coordinates, vec2 size);
 

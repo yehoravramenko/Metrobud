@@ -1,9 +1,9 @@
 #pragma once
 
-#include <common.h>
+#include <common.hpp>
 
 typedef struct Window {
-  GLFWwindow *pWindow;
+  GLFWwindow *pGLFWWindow;
 } Window;
 
 Window *g_Window();

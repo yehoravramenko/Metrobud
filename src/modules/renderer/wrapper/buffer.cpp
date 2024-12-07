@@ -1,4 +1,4 @@
-#include "buffer.h"
+#include "buffer.hpp"
 
 void Buffer_New(Buffer *self, unsigned int target) {
   glGenBuffers(1, &self->id);

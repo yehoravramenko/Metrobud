@@ -1,8 +1,9 @@
 #pragma once
+#define SHADER_SOURCE const char *
 #define GLSL(src) "#version 460\n" #src
 // clang-format off
 
-const char *vertexShader_src = GLSL(
+SHADER_SOURCE vertexShader_src = GLSL(
 layout(location = 0) in vec3 inPos;
 
 void main()
@@ -11,7 +12,7 @@ void main()
 }
 );
 
-const char *fragmentShader_src = GLSL(
+SHADER_SOURCE fragmentShader_src = GLSL(
 out vec4 FragColor;
 
 void main()

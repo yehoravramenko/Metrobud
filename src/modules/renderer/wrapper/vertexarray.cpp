@@ -1,4 +1,4 @@
-#include "vertexarray.h"
+#include "vertexarray.hpp"
 
 void VertexArray_New(VertexArray *self) {
   glGenVertexArrays(1, &self->id);

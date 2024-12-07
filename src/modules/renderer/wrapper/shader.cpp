@@ -1,4 +1,4 @@
-#include "shader.h"
+#include "shader.hpp"
 
 int _compileShader(unsigned int shaderType, const char *shaderSource) {
   int shader = glCreateShader(shaderType);

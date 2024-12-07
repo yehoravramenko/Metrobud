@@ -6,9 +6,9 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "modules/math/math.h"
+#include "modules/math/math.hpp"
 
-#include "modules/engine/engine.h"
+#include "modules/engine/engine.hpp"
 
 #ifdef DEBUG
 #define DEBUG_MSG(...)                                                         \

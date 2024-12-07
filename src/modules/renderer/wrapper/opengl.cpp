@@ -1,4 +1,4 @@
-#include "opengl.h"
+#include "opengl.hpp"
 
 void GL_Viewport(vec2 coordinates, vec2 size) {
   glViewport(coordinates.x, coordinates.y, size.x, size.y);

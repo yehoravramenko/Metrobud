@@ -1,7 +1,7 @@
 #define DEBUG_LOG
-#include "client.h"
-#include <modules/window/window.h>
-#include <modules/renderer/renderer.h>
+#include "client.hpp"
+#include <modules/window/window.hpp>
+#include <modules/renderer/renderer.hpp>
 
 Client *client;
 

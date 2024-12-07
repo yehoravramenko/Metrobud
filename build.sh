@@ -7,15 +7,15 @@ EXECUTABLE_NAME="metrobud"   # Name of the final executable
 EXT=".exe"
 
 # Compiler settings
-CC=gcc                  # Compiler
-CFLAGS="-Wall -Wextra -Isrc -Iinclude -Llib -g -std=c23"  # Compiler flags
+CC=g++                  # Compiler
+CFLAGS="-Wall -Wextra -Isrc -Iinclude -Llib -g -std=c++20"  # Compiler flags
 LDFLAGS="-lglfw3dll -lopengl32 -lgdi32 bin/glad.dll"              # Linker flags
 
 # Ensure output directory exists
 mkdir -p $OUTPUT_DIR
 
 # Find all .c files in the source directory
-SOURCES=$(find $SOURCE_DIR -name "*.c")
+SOURCES=$(find $SOURCE_DIR -name "*.cpp")
 # echo $SOURCES
 
 # Compile the project

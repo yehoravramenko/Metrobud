@@ -1,6 +1,6 @@
 #pragma once
 
-#include <common.h>
+#include <common.hpp>
 
 typedef struct Client {
   vec2 windowSize;

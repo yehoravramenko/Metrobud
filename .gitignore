@@ -1,5 +1,6 @@
 # Logfie in bin
 bin/*.log
+cimgui/**
 
 # Prerequisites
 *.d

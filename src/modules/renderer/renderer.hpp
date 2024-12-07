@@ -1,10 +1,10 @@
 #pragma once
 
-#include <common.h>
-#include "wrapper/buffer.h"
-#include "wrapper/vertexarray.h"
-#include "wrapper/shader.h"
-#include "wrapper/opengl.h"
+#include <common.hpp>
+#include "wrapper/buffer.hpp"
+#include "wrapper/vertexarray.hpp"
+#include "wrapper/shader.hpp"
+#include "wrapper/opengl.hpp"
 
 typedef struct Renderer {
   unsigned int clearMask;

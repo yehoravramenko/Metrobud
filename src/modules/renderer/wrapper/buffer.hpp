@@ -1,6 +1,6 @@
 #pragma once
 
-#include <common.h>
+#include <common.hpp>
 
 typedef struct Buffer {
   unsigned int id;
