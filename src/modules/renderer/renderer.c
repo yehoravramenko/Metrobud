@@ -41,10 +41,6 @@ Renderer *g_Renderer() {
   return renderer;
 }
 
-void Renderer_SetClearColor(float R, float G, float B, float A) {
-  glClearColor(R, G, B, A);
-}
-
 void Renderer_SetClearMask(unsigned int mask) {
   renderer->clearMask = mask;
 }
@@ -55,10 +51,10 @@ bool Renderer_Init(vec2 viewportSize) {
   }
 
   renderer = calloc(1, sizeof(Renderer));
-  Renderer_SetClearColor(0.0f, 0.5f, 0.0f, 1.0f);
+  GL_SetClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   Renderer_SetClearMask(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  glViewport(0, 0, viewportSize.x, viewportSize.y);
+  GL_Viewport((vec2){0, 0}, viewportSize);
 
   VertexArray_New(&renderer->VAO);
   VertexArray_Bind(&renderer->VAO);
@@ -82,10 +78,11 @@ void Renderer_Update() {
 }
 
 void Renderer_Render() {
-  glClear(renderer->clearMask);
+  GL_Clear(renderer->clearMask);
+
   Shader_Use(&shader);
   VertexArray_Bind(&renderer->VAO);
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  GL_DrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 void Renderer_Exit() {

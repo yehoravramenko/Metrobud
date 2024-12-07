@@ -15,7 +15,6 @@ typedef struct Renderer {
 
 Renderer *g_Renderer();
 
-void Renderer_SetClearColor(float R, float G, float B, float A);
 void Renderer_SetClearMask(unsigned int mask);
 
 bool Renderer_Init(vec2 viewportSize);
