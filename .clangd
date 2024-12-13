@@ -1,0 +1,9 @@
+CompileFlags:
+  Add: ["-ID:\\aura\\metrobud\\include", 
+  "-ID:\\yehoravramenko\\metrobud\\src", 
+  "-std=c++23", "-Wall", "-xc++"]
+
+Diagnostics:
+  Suppress: "-Wundefined-internal"
+  UnusedIncludes: None
+  MissingIncludes: None
