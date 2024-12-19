@@ -73,18 +73,22 @@ GENERATED :=
 OBJECTS :=
 
 GENERATED += $(OBJDIR)/RGFW.o
+GENERATED += $(OBJDIR)/buffer.o
 GENERATED += $(OBJDIR)/client.o
 GENERATED += $(OBJDIR)/engine.o
 GENERATED += $(OBJDIR)/glad.o
 GENERATED += $(OBJDIR)/main.o
 GENERATED += $(OBJDIR)/renderer.o
+GENERATED += $(OBJDIR)/shader.o
 GENERATED += $(OBJDIR)/window.o
 OBJECTS += $(OBJDIR)/RGFW.o
+OBJECTS += $(OBJDIR)/buffer.o
 OBJECTS += $(OBJDIR)/client.o
 OBJECTS += $(OBJDIR)/engine.o
 OBJECTS += $(OBJDIR)/glad.o
 OBJECTS += $(OBJDIR)/main.o
 OBJECTS += $(OBJDIR)/renderer.o
+OBJECTS += $(OBJDIR)/shader.o
 OBJECTS += $(OBJDIR)/window.o
 
 # Rules
@@ -159,6 +163,12 @@ $(OBJDIR)/client.o: src/client/client.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/engine.o: src/enigne/engine.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/buffer.o: src/glwrapper/buffer/buffer.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/shader.o: src/glwrapper/shader/shader.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: src/main.cpp

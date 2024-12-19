@@ -3,6 +3,8 @@
 using namespace Metrobud;
 
 Window::Window() {
+  RGFW_setGLVersion(RGFW_GL_CORE, 4, 6);
+
   this->pWindow = std::unique_ptr<RGFW_window>(
       RGFW_createWindow("metrobud", RGFW_RECT(0, 0, 800, 600),
                         (u16)(RGFW_CENTER | RGFW_NO_RESIZE)));
