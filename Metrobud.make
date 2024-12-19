@@ -74,12 +74,18 @@ OBJECTS :=
 
 GENERATED += $(OBJDIR)/RGFW.o
 GENERATED += $(OBJDIR)/client.o
+GENERATED += $(OBJDIR)/engine.o
 GENERATED += $(OBJDIR)/glad.o
 GENERATED += $(OBJDIR)/main.o
+GENERATED += $(OBJDIR)/renderer.o
+GENERATED += $(OBJDIR)/window.o
 OBJECTS += $(OBJDIR)/RGFW.o
 OBJECTS += $(OBJDIR)/client.o
+OBJECTS += $(OBJDIR)/engine.o
 OBJECTS += $(OBJDIR)/glad.o
 OBJECTS += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/renderer.o
+OBJECTS += $(OBJDIR)/window.o
 
 # Rules
 # #############################################
@@ -152,7 +158,16 @@ $(OBJDIR)/glad.o: external/glad/glad.c
 $(OBJDIR)/client.o: src/client/client.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/engine.o: src/enigne/engine.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: src/main.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/renderer.o: src/renderer/renderer.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/window.o: src/window/window.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

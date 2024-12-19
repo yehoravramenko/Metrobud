@@ -1,18 +1,13 @@
-#include <RGFW/RGFW.h>
-#include <print>
+#include <client/client.hpp>
+
+int ret_code = 0;
 
 int main(int argc, char **argv) {
-  std::println("metrobud?");
-
-  RGFW_window *window = RGFW_createWindow("metrobud", RGFW_RECT(0, 0, 800, 600),
-                                          (u16)(RGFW_CENTER | RGFW_NO_RESIZE));
-
-  while (RGFW_window_shouldClose(window) == RGFW_FALSE) {
-    RGFW_window_checkEvents(window, 0);
-    RGFW_window_swapBuffers(window);
+  auto Client = std::make_unique<Metrobud::Client>(argc, argv);
+  while (!Client->shouldClose()) {
+    Client->Update();
   }
+  Client->Exit(ret_code);
 
-  RGFW_window_close(window);
-
-  return 0;
+  return ret_code;
 }

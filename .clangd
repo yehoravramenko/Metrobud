@@ -1,6 +1,6 @@
 CompileFlags:
   Add: ["-ID:\\aura\\metrobud\\include", 
-  "-ID:\\yehoravramenko\\metrobud\\src", 
+  "-ID:\\aura\\metrobud\\src", 
   "-std=c++23", "-Wall", "-xc++"]
 
 Diagnostics:
