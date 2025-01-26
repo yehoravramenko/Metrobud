@@ -5,7 +5,7 @@
 namespace AuraEngine {
 Client::Client() {
   Log::EngineLog.Info("Testing engine log");
-  if (glfwInit())
+  if (!glfwInit())
     Log::EngineLog.Error("Failed to initialize GLFW");
   // stuff
 }
