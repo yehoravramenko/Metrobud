@@ -8,7 +8,15 @@ class AE_API Client {
 public:
   Client();
 
-private:
+  void MainLoop();
+
+  virtual void OnStart()=0;
+  virtual void OnUpdate()=0;
+  virtual void OnRender()=0;
+  virtual void OnExit()=0;
+  //~Client();
+
+protected:
   Window window;
   Renderer renderer;
 };

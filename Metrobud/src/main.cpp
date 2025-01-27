@@ -1,7 +1,8 @@
-#include <AuraEngine.hpp>
+//#include <AuraEngine.hpp>
+#include "Metrobud.hpp"
 
 int main() {
-  AuraEngine::Log::ClientLog.Info("metrobud!");
-  AuraEngine::Client client{};
+  Metrobud Metrobud{};
+  Metrobud.MainLoop();
   return 0;
 }
