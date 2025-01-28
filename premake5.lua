@@ -39,7 +39,7 @@ project "AuraEngine"
 
 	links
 	{
-		"opengl32", "glfw3"
+		"opengl32", "SDL3"
 	}
 
 	defines
@@ -75,8 +75,7 @@ project "Metrobud"
 	files
 	{
 		"%{prj.name}/src/**.hpp",
-		"%{prj.name}/src/**.cpp",
-		"thirdparty/src/glad.c"
+		"%{prj.name}/src/**.cpp"
 	}
 
 	includedirs
@@ -94,6 +93,11 @@ project "Metrobud"
 	{
 		"_CRT_SECURE_NO_WARNINGS",
 		"AE_PLATFORM_WINDOWS"
+	}
+
+	postbuildcommands 
+	{
+		("{COPY} %{wks.location}/thirdparty/lib/SDL3.dll ../bin/" .. outputdir .. "/Metrobud")
 	}
 
 	filter "configurations:Debug"

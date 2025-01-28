@@ -7,37 +7,34 @@ namespace AuraEngine
   {
     Log::EngineLog.Info("Window called");
 
-    if (!glfwInit())
-      Log::EngineLog.Error("Failed to initialize GLFW");
+    this->window = SDL_CreateWindow("Aura Engine", 800, 600, SDL_WINDOW_OPENGL);
 
-    this->window = glfwCreateWindow(800, 600, "Aura Engine", nullptr, nullptr);
     if (!this->window)
-      Log::EngineLog.Error("Failed to create window");
+      Log::EngineLog.Error(std::string("Failed to create window.\nSDL_Error: ") + SDL_GetError());
   }
 
   void Window::Update()
   {
-    glfwPollEvents();
-    glfwSwapBuffers(this->window);
+    SDL_GL_SwapWindow(this->window);
   }
 
-  void Window::SetSize(const std::pair<int, int>& size)
+  void Window::SetSize(const std::pair<int, int> &size)
   {
-      glfwSetWindowSize(this->window, size.first, size.second);
+    SDL_SetWindowSize(this->window, size.first, size.second);
   }
 
-  void Window::SetTitle(const std::string& title)
+  void Window::SetTitle(const std::string &title)
   {
-      glfwSetWindowTitle(this->window, title.c_str());
+    SDL_SetWindowTitle(this->window, title.c_str());
   }
 
-  bool Window::ShouldClose()
+  SDL_Window *const Window::GetSDLWindow()
   {
-      return glfwWindowShouldClose(this->window) == GLFW_TRUE;
+    return this->window;
   }
 
   Window::~Window()
   {
-    glfwTerminate();
+
   }
 }

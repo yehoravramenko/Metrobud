@@ -1,23 +1,24 @@
 #pragma once
 #include "../DllCore.hpp"
-#include "../Window/Window.hpp"
 #include "../Renderer/Renderer.hpp"
+#include "../EventHandler/EventHandler.hpp"
 
 namespace AuraEngine {
-class AE_API Client {
-public:
-  Client();
+  class AE_API Client {
+  public:
+    Client();
 
-  void MainLoop();
+    void MainLoop();
 
-  virtual void OnStart()=0;
-  virtual void OnUpdate()=0;
-  virtual void OnRender()=0;
-  virtual void OnExit()=0;
-  //~Client();
+    virtual void OnStart() = 0;
+    virtual void OnUpdate() = 0;
+    virtual void OnRender() = 0;
+    virtual void OnExit() = 0;
 
-protected:
-  Window window;
-  Renderer renderer;
-};
+    ~Client();
+
+  protected:
+    Renderer *renderer = nullptr;
+    EventHandler *eventHandler = nullptr;
+  };
 } // namespace AuraEngine
