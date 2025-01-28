@@ -33,9 +33,13 @@ namespace AuraEngine {
 
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
       Log::EngineLog.Error("Failed to intitialize GLAD.");
+
+    glViewport(0, 0, 800, 600);
+    glClearColor(.07f, .07f, .07f, 1.f);
   }
   void Renderer::Render()
   {
+    glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
   }
 
   Window *const Renderer::GetWindow()
@@ -46,5 +50,9 @@ namespace AuraEngine {
   {
     delete this->window;
     SDL_Quit();
+  }
+  void Renderer::windowResizeCallback(std::pair<int, int> newSize)
+  {
+    glViewport(0, 0, newSize.first, newSize.second);
   }
 }

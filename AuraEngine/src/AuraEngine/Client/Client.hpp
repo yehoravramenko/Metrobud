@@ -17,8 +17,13 @@ namespace AuraEngine {
 
     ~Client();
 
+    friend EventHandler;
+
   protected:
     Renderer *renderer = nullptr;
     EventHandler *eventHandler = nullptr;
+
+  private:
+
   };
 } // namespace AuraEngine

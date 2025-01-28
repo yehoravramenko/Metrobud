@@ -1,13 +1,11 @@
 #include "Client.hpp"
 #include "../Log/Log.hpp"
-//#define GLFW_INCLUDE_NONE
-//#include "GLFW/glfw3.h"
 
 namespace AuraEngine {
   Client::Client() {
     Log::EngineLog.Info("Client called");
     this->renderer = new Renderer();
-    this->eventHandler = new EventHandler();
+    this->eventHandler = new EventHandler(this->renderer);
   }
 
   void Client::MainLoop()
@@ -31,5 +29,4 @@ namespace AuraEngine {
     delete this->renderer;
     delete this->eventHandler;
   }
-
 } // namespace AuraEngine
