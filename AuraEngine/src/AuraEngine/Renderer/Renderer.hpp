@@ -2,6 +2,9 @@
 #include "../DllCore.hpp"
 #include "../Window/Window.hpp"
 #include <SDL3/SDL.h>
+#include "VertexBuffer.hpp"
+#include "VertexArray.hpp"
+#include "Shader.hpp"
 
 namespace AuraEngine {
   class EventHandler;
@@ -19,6 +22,10 @@ namespace AuraEngine {
   private:
     Window *window = nullptr;
     SDL_GLContext gl_context = nullptr;
+
+    VertexBuffer *VBO = nullptr;
+    VertexArray *DummyVAO = nullptr;
+    Shader *shader = nullptr;
 
     void windowResizeCallback(std::pair<int, int> newSize);
   };
