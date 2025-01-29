@@ -2,10 +2,10 @@
 #include <glad/glad.h>
 
 namespace AuraEngine {
-  class VertexBuffer
+  class Buffer
   {
   public:
-    VertexBuffer(GLenum target);
+    Buffer(GLenum target);
     void Bind() const;
     void SetData(size_t size, const GLvoid *data, GLenum usage = GL_STATIC_DRAW) const;
 

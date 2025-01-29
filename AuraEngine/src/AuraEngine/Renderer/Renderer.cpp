@@ -5,18 +5,29 @@
 
 namespace AuraEngine {
   constexpr float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
+    // positions        // texture coords
+     0.5f,  0.5f, 0.0f, 1.0f, 1.0f,   // top right
+     0.5f, -0.5f, 0.0f, 1.0f, 0.0f,   // bottom right
+    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,   // bottom left
+    -0.5f,  0.5f, 0.0f, 0.0f, 1.0f    // top left 
+  };
+
+  constexpr unsigned int indices[] = {
+        0, 1, 3, // first triangle
+        1, 2, 3  // second triangle
   };
 
   constexpr char vert_shader[] = R"(
     #version 460 core
     layout(location=0) in vec3 inPos;
+    layout(location=1) in vec2 inTexCoord;
+
+    out vec2 TexCoord;
 
     void main()
     {
       gl_Position = vec4(inPos, 1.0);
+      TexCoord = inTexCoord;  
     }
   )";
 
@@ -24,9 +35,13 @@ namespace AuraEngine {
     #version 460 core
     out vec4 FragColor;
     
+    in vec2 TexCoord;
+    
+    uniform sampler2D tex1;
+
     void main()
     {
-      FragColor = vec4(0.0f, 0.5f, 0.0f, 1.0f);
+      FragColor = texture(tex1, TexCoord);
     }
   )";
 
@@ -41,9 +56,9 @@ namespace AuraEngine {
 #endif
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, context_flags);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
@@ -69,16 +84,29 @@ namespace AuraEngine {
     glViewport(0, 0, 800, 600);
     glClearColor(.07f, .07f, .07f, 1.f);
 
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);                   // x texture coordinate
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);                   // y texture coordinate
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // downscaling
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);               // upscaling
+
+    this->texture1 = new Texture(R"(E:\aura\Metrobud\resources\kenney_prototype-textures\PNG\Orange\texture_01.png)");
+
     this->shader = new Shader(vert_shader, frag_shader);
+    this->shader->SetInt("tex1", 0);
 
     this->DummyVAO = new VertexArray();
     this->DummyVAO->Bind();
 
-    this->VBO = new VertexBuffer(GL_ARRAY_BUFFER);
+    this->VBO = new Buffer(GL_ARRAY_BUFFER);
     this->VBO->Bind();
     this->VBO->SetData(sizeof(vertices), vertices);
 
-    this->DummyVAO->AddVertexAttribPointer("vertexPos", 3, GL_FLOAT, GL_FALSE, 3, 0);
+    this->EBO = new Buffer(GL_ELEMENT_ARRAY_BUFFER);
+    this->EBO->Bind();
+    this->EBO->SetData(sizeof(indices), indices);
+
+    this->DummyVAO->AddVertexAttribPointer("vertexPos", 3, GL_FLOAT, GL_FALSE, 5, 0);
+    this->DummyVAO->AddVertexAttribPointer("texturePos", 2, GL_FLOAT, GL_FALSE, 5, 3);
 
     this->DummyVAO->Unbind();
   }
@@ -87,8 +115,9 @@ namespace AuraEngine {
     glClear(GL_COLOR_BUFFER_BIT);
 
     this->shader->Use();
+    this->texture1->Bind();
     this->DummyVAO->Bind();
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   }
 
   Window *const Renderer::GetWindow()

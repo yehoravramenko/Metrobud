@@ -1,18 +1,18 @@
-#include "VertexBuffer.hpp"
+#include "Buffer.hpp"
 
 namespace AuraEngine {
-  VertexBuffer::VertexBuffer(GLenum target)
+  Buffer::Buffer(GLenum target)
   {
     this->target = target;
     glGenBuffers(1, &this->Id);
   }
 
-  void VertexBuffer::Bind()const
+  void Buffer::Bind()const
   {
     glBindBuffer(this->target, this->Id);
   }
 
-  void VertexBuffer::SetData(size_t size, const GLvoid *data, GLenum usage) const
+  void Buffer::SetData(size_t size, const GLvoid *data, GLenum usage) const
   {
     glBufferData(this->target, size, data, usage);
   }

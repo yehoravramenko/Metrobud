@@ -23,18 +23,21 @@ project "AuraEngine"
 	files
 	{
 		"%{prj.name}/src/**.hpp",
+		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
 		"thirdparty/src/glad.c"
 	}
 
 	includedirs
 	{
-		"thirdparty/include"
+		"thirdparty/include/glad",
+		"thirdparty/include/SDL3",
+		"thirdparty/include/stb",
 	}
 
 	libdirs
 	{
-		"thirdparty/lib"
+		"thirdparty/lib/SDL3"
 	}
 
 	links
@@ -75,12 +78,15 @@ project "Metrobud"
 	files
 	{
 		"%{prj.name}/src/**.hpp",
+		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
 	}
 
 	includedirs
 	{
-		"thirdparty/include",
+		-- "thirdparty/include",
+		"thirdparty/include/SDL3",
+		"thirdparty/include/glad",
 		"AuraEngine/src"
 	}
 
@@ -97,7 +103,7 @@ project "Metrobud"
 
 	postbuildcommands 
 	{
-		("{COPY} %{wks.location}/thirdparty/lib/SDL3.dll ../bin/" .. outputdir .. "/Metrobud")
+		("{COPY} %{wks.location}/thirdparty/lib/SDL3/SDL3.dll ../bin/" .. outputdir .. "/Metrobud")
 	}
 
 	filter "configurations:Debug"

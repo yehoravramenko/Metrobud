@@ -7,6 +7,7 @@ namespace AuraEngine {
   public:
     Shader(const char *vertexShaderSrc, const char *fragmentShaderSrc);
     void Use() const;
+    void SetInt(const std::string &name, int value) const;
 
   private:
     unsigned int programId;

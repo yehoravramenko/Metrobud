@@ -42,8 +42,14 @@ namespace AuraEngine {
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
   }
+
   void Shader::Use() const
   {
     glUseProgram(this->programId);
+  }
+
+  void Shader::SetInt(const std::string &name, int value) const
+  {
+    glUniform1i(glGetUniformLocation(this->programId, name.c_str()), value);
   }
 }
