@@ -7,7 +7,7 @@ namespace AuraEngine
   {
     Log::EngineLog.Info("Window called");
 
-    this->window = SDL_CreateWindow("Aura Engine", 800, 600, SDL_WINDOW_OPENGL);
+    this->window = SDL_CreateWindow("Aura Engine", this->size.first, this->size.second, SDL_WINDOW_OPENGL);
 
     if (!this->window)
       Log::EngineLog.Error(std::string("Failed to create window.\nSDL_Error: ") + SDL_GetError());
@@ -21,6 +21,7 @@ namespace AuraEngine
   void Window::SetSize(const std::pair<int, int> &size)
   {
     SDL_SetWindowSize(this->window, size.first, size.second);
+    this->size = size;
   }
 
   void Window::SetTitle(const std::string &title)
@@ -31,6 +32,11 @@ namespace AuraEngine
   SDL_Window *const Window::GetSDLWindow()
   {
     return this->window;
+  }
+
+  const std::pair<int, int> &Window::GetSize()
+  {
+    return this->size;
   }
 
   Window::~Window()

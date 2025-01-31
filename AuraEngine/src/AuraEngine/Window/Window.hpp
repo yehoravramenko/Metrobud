@@ -5,18 +5,21 @@
 #include <utility>
 
 namespace AuraEngine {
-  class AE_API Window {
+  class Window {
   public:
     Window();
 
     void Update();
-    void SetSize(const std::pair<int, int> &size);
-    void SetTitle(const std::string &title);
+    AE_API void SetSize(const std::pair<int, int> &size);
+    AE_API void SetTitle(const std::string &title);
 
     SDL_Window *const GetSDLWindow();
+
+    const std::pair<int, int> &GetSize();
 
     ~Window();
   private:
     SDL_Window *window = nullptr;
+    std::pair<int, int> size = { 800, 600 };
   };
 } // namespace AuraEngine

@@ -3,6 +3,11 @@
 #include <glad/glad.h>
 #include <format>
 
+#include <glm/mat4x4.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 namespace AuraEngine {
   constexpr float vertices[] = {
     // positions        // texture coords
@@ -24,9 +29,11 @@ namespace AuraEngine {
 
     out vec2 TexCoord;
 
+    uniform mat4 mvp;
+
     void main()
     {
-      gl_Position = vec4(inPos, 1.0);
+      gl_Position = mvp * vec4(inPos, 1.0);
       TexCoord = inTexCoord;  
     }
   )";
@@ -44,6 +51,8 @@ namespace AuraEngine {
       FragColor = texture(tex1, TexCoord);
     }
   )";
+
+  glm::mat4 model;
 
   Renderer::Renderer()
   {
@@ -109,12 +118,26 @@ namespace AuraEngine {
     this->DummyVAO->AddVertexAttribPointer("texturePos", 2, GL_FLOAT, GL_FALSE, 5, 3);
 
     this->DummyVAO->Unbind();
+
+    model = glm::mat4(1.0f);
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
   }
   void Renderer::Render()
   {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glm::mat4 view = glm::mat4(1.0f);
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -1.0f));
+
+    const std::pair<int, int> &windowSize = this->window->GetSize();
+    glm::mat4 projection;
+    projection = glm::perspective(glm::radians(60.0f), static_cast<float>(windowSize.first) / windowSize.second, 0.1f, 100.0f);
+
+    glm::mat4 mvp = projection * view * model;
+
     this->shader->Use();
+    this->shader->SetMat4(this->shader->GetUniformLocation("mvp"), glm::value_ptr(mvp));
+
     this->texture1->Bind();
     this->DummyVAO->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
