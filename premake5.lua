@@ -33,6 +33,7 @@ project "AuraEngine"
 		"thirdparty/include/glad",
 		"thirdparty/include/SDL3",
 		"thirdparty/include/stb",
+		"thirdparty/include/glm",
 	}
 
 	libdirs
