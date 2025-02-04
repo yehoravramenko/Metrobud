@@ -4,28 +4,28 @@
 
 namespace AuraEngine {
 
-enum class LogLevel { INFO = 0, WARN, ERROR };
-enum class LogStreamSource { ENGINE = 0, CLIENT };
+  enum class LogLevel { INFO = 0, WARN, ERROR };
+  enum class LogStreamSource { ENGINE = 0, CLIENT };
 
-class AE_API LogStream {
-public:
-  LogStream(LogStreamSource src);
+  class LogStream {
+  public:
+    LogStream(LogStreamSource src);
 
-  // TODO: add variadic
-  void Info(const std::string &msg);
-  void Warn(const std::string &msg);
-  void Error(const std::string &msg);
+    // TODO: add variadic
+    void Info(const std::string &msg);
+    void Warn(const std::string &msg);
+    void Error(const std::string &msg);
 
-private:
-  LogStreamSource src;
+  private:
+    LogStreamSource src;
 
-  void Print(const std::string &msg, LogLevel level);
-};
+    void Print(const std::string &msg, LogLevel level);
+  };
 
-class AE_API Log {
-public:
-  static LogStream ClientLog;
-  static LogStream EngineLog;
-};
+  class Log {
+  public:
+    static LogStream ClientLog;
+    static LogStream EngineLog;
+  };
 
 } // namespace AuraEngine

@@ -11,7 +11,7 @@ void Metrobud::OnStart()
 void Metrobud::OnUpdate()
 {
   if (Input->GetKey(Keycode::W))
-    Log::ClientLog.Info("W pressed");
+    Debug.Log("W pressed");
 }
 
 void Metrobud::OnRender()
