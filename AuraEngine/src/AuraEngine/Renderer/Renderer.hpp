@@ -1,20 +1,23 @@
 #pragma once
-#include "../DllCore.hpp"
+#include "../ExportAPI.hpp"
 #include "../Window/Window.hpp"
+#include "../EventHandler/EventHandler.hpp"
 #include <SDL3/SDL.h>
 #include "Buffer.hpp"
 #include "VertexArray.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
 
+#include <utility>
+
 namespace AuraEngine {
-  class EventHandler;
   class AE_API Renderer {
   public:
     Renderer();
-    void Render();
+    void Update() const;
+    void Render() const;
 
-    Window *const GetWindow();
+    void SetSize(const std::pair<int, int> &size) const;
 
     ~Renderer();
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "../DllCore.hpp"
+#include "../ExportAPI.hpp"
 #include <string>
 
 namespace AuraEngine {

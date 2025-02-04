@@ -1,15 +1,17 @@
 #include "Metrobud.hpp"
 
-Metrobud::Metrobud() : Client() {}
+using namespace AuraEngine;
+
+Metrobud::Metrobud() : Client("Metrobud") {}
 
 void Metrobud::OnStart()
 {
-  this->renderer->GetWindow()->SetSize({ 1280, 720 });
-  this->renderer->GetWindow()->SetTitle("Metrobud");
 }
 
 void Metrobud::OnUpdate()
 {
+  if (Input->GetKey(Keycode::W))
+    Log::ClientLog.Info("W pressed");
 }
 
 void Metrobud::OnRender()

@@ -1,17 +1,17 @@
 #pragma once
-#include "../Renderer/Renderer.hpp"
-
+#include "../Client/Client.hpp"
 namespace AuraEngine
 {
   class EventHandler
   {
   public:
-    EventHandler(Renderer *const renderer);
+    EventHandler(Client *const client);
     void PollEvents();
-    bool ShouldQuit() const;
+
+    ~EventHandler();
 
   private:
-    bool shouldQuit = false;
-    Renderer *renderer = nullptr;
+
+    Client *client = nullptr;
   };
 }

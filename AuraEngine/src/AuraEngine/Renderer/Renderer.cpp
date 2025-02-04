@@ -98,7 +98,7 @@ namespace AuraEngine {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // downscaling
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);               // upscaling
 
-    this->texture1 = new Texture(R"(E:\aura\Metrobud\resources\kenney_prototype-textures\PNG\Orange\texture_01.png)");
+    this->texture1 = new Texture(R"(E:\aura\Metrobud\resources\kenney_prototype-textures\PNG\Green\texture_01.png)");
 
     this->shader = new Shader(vert_shader, frag_shader);
     this->shader->SetInt("tex1", 0);
@@ -122,7 +122,13 @@ namespace AuraEngine {
     model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
   }
-  void Renderer::Render()
+
+  void Renderer::Update()const
+  {
+    this->window->Update();
+  }
+
+  void Renderer::Render()const
   {
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -143,10 +149,11 @@ namespace AuraEngine {
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   }
 
-  Window *const Renderer::GetWindow()
+  void Renderer::SetSize(const std::pair<int, int> &size) const
   {
-    return this->window;
+    this->window->SetSize(size);
   }
+
   Renderer::~Renderer()
   {
     delete this->shader;

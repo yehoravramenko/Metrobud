@@ -1,5 +1,5 @@
 #pragma once
-#include "../DllCore.hpp"
+#include "../ExportAPI.hpp"
 #include <SDL3/SDL.h>
 #include <string>
 #include <utility>

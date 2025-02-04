@@ -30,6 +30,8 @@ project "AuraEngine"
 
 	includedirs
 	{
+		"%{prj.name}/src/AuraEngine",
+
 		"thirdparty/include/glad",
 		"thirdparty/include/SDL3",
 		"thirdparty/include/stb",
