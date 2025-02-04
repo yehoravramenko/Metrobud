@@ -1,3 +1,4 @@
+
 bin/
 bin-int/
 .vs/
@@ -24,6 +25,7 @@ bin-int/
 *.so
 *.dylib
 *.dll
+!/thirdparty/lib/SDL3/SDL3.dll
 
 # Fortran module files
 *.mod
@@ -34,6 +36,7 @@ bin-int/
 *.la
 *.a
 *.lib
+!/thirdparty/lib/SDL3/SDL3.lib
 
 # Executables
 *.exe
