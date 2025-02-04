@@ -1,4 +1,5 @@
 #include "EventHandler.hpp"
+#include "../Client/Client.hpp"
 #include "../Log/Log.hpp"
 #include <SDL3/SDL.h>
 #include <format>
@@ -19,7 +20,7 @@ namespace AuraEngine {
         this->client->isRunning = false;
         break;
       case SDL_EVENT_WINDOW_RESIZED:
-        this->client->renderer->windowResizeCallback({ event.window.data1, event.window.data2 });
+        this->client->Renderer->windowResizeCallback({ event.window.data1, event.window.data2 });
         break;
 
       case SDL_EVENT_KEY_DOWN:

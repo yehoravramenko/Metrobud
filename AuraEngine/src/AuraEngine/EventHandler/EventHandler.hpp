@@ -1,8 +1,11 @@
 #pragma once
-#include "../Client/Client.hpp"
+#include "../ExportAPI.hpp"
+
 namespace AuraEngine
 {
-  class EventHandler
+  class Client;
+
+  class AE_API EventHandler
   {
   public:
     EventHandler(Client *const client);

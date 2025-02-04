@@ -10,7 +10,7 @@ namespace AuraEngine {
     Window();
 
     void Update();
-    AE_API void SetSize(const std::pair<int, int> &size);
+    //AE_API void SetSize(const std::pair<int, int> &size);
     AE_API void SetTitle(const std::string &title);
 
     SDL_Window *const GetSDLWindow();

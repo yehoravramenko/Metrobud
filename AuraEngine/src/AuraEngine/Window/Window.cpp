@@ -1,13 +1,21 @@
 #include "Window.hpp"
 #include "../Log/Log.hpp"
+#include <format>
 
 namespace AuraEngine
 {
   Window::Window()
   {
-    Log::EngineLog.Info("Window called");
+    this->window = SDL_CreateWindow("Aura Engine", 800, 600, SDL_WINDOW_OPENGL);
 
-    this->window = SDL_CreateWindow("Aura Engine", this->size.first, this->size.second, SDL_WINDOW_OPENGL);
+    int numDisplays = 0;
+    SDL_DisplayID *displays = SDL_GetDisplays(&numDisplays);
+    const SDL_DisplayMode *DM = SDL_GetCurrentDisplayMode(displays[0]);
+    size = { DM->w, DM->h };
+    Log::EngineLog.Info(std::format("Screen size: {}x{}", size.first, size.second));
+
+    SDL_SetWindowSize(this->window, this->size.first, this->size.second);
+    SDL_SetWindowFullscreen(this->window, true);
 
     if (!this->window)
       Log::EngineLog.Error(std::string("Failed to create window.\nSDL_Error: ") + SDL_GetError());
@@ -16,12 +24,6 @@ namespace AuraEngine
   void Window::Update()
   {
     SDL_GL_SwapWindow(this->window);
-  }
-
-  void Window::SetSize(const std::pair<int, int> &size)
-  {
-    SDL_SetWindowSize(this->window, size.first, size.second);
-    this->size = size;
   }
 
   void Window::SetTitle(const std::string &title)

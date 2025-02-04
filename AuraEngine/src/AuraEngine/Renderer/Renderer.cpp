@@ -149,11 +149,6 @@ namespace AuraEngine {
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   }
 
-  void Renderer::SetSize(const std::pair<int, int> &size) const
-  {
-    this->window->SetSize(size);
-  }
-
   Renderer::~Renderer()
   {
     delete this->shader;
@@ -162,7 +157,7 @@ namespace AuraEngine {
     delete this->window;
     SDL_Quit();
   }
-  void Renderer::windowResizeCallback(std::pair<int, int> newSize)
+  void Renderer::windowResizeCallback(std::pair<int, int> newSize) const
   {
     glViewport(0, 0, newSize.first, newSize.second);
   }

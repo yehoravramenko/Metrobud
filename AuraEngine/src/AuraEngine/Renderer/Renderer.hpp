@@ -1,7 +1,6 @@
 #pragma once
 #include "../ExportAPI.hpp"
 #include "../Window/Window.hpp"
-#include "../EventHandler/EventHandler.hpp"
 #include <SDL3/SDL.h>
 #include "Buffer.hpp"
 #include "VertexArray.hpp"
@@ -11,13 +10,14 @@
 #include <utility>
 
 namespace AuraEngine {
+  class EventHandler;
   class AE_API Renderer {
   public:
     Renderer();
     void Update() const;
     void Render() const;
 
-    void SetSize(const std::pair<int, int> &size) const;
+    //void SetSize(const std::pair<int, int> &size) const;
 
     ~Renderer();
 
@@ -33,6 +33,6 @@ namespace AuraEngine {
     Shader *shader = nullptr;
     Texture *texture1 = nullptr;
 
-    void windowResizeCallback(std::pair<int, int> newSize);
+    void windowResizeCallback(std::pair<int, int> newSize) const;
   };
 } // namespace AuraEngine
