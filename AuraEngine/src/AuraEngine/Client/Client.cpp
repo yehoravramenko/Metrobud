@@ -2,11 +2,12 @@
 #include "../Log/Log.hpp"
 
 namespace AuraEngine {
-  Client::Client(const std::string &name = "") {
-    Log::EngineLog.Info("Client called");
+  Client::Client(std::string_view name)
+    : eventHandler(this), Debug() {
     this->Renderer = new AuraEngine::Renderer();
-    this->eventHandler = new EventHandler(this->Renderer);
     this->Input = new AuraEngine::Input();
+
+    this->name = name;
   }
 
   void Client::MainLoop()
@@ -14,7 +15,7 @@ namespace AuraEngine {
     this->OnStart();
     while (this->isRunning)
     {
-      this->eventHandler->PollEvents();
+      this->eventHandler.PollEvents();
 
       this->Renderer->Update();
       this->OnUpdate();
@@ -28,7 +29,6 @@ namespace AuraEngine {
   Client::~Client()
   {
     delete this->Renderer;
-    delete this->eventHandler;
     delete this->Input;
   }
 } // namespace AuraEngine

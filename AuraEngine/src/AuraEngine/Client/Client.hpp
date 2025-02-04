@@ -1,32 +1,34 @@
 #pragma once
 #include "../ExportAPI.hpp"
 #include "../Renderer/Renderer.hpp"
+#include "../Debug/Debug.hpp"
 #include "../EventHandler/EventHandler.hpp"
 #include "../Input/Input.hpp"
 #include <string>
 
 namespace AuraEngine {
-  class AE_API Client {
+  class Client {
   public:
-    Client(const std::string &name = "");
+    AE_API Client(std::string_view name = "");
 
-    void MainLoop();
+    AE_API void MainLoop();
 
     virtual void OnStart() = 0;
     virtual void OnUpdate() = 0;
     virtual void OnRender() = 0;
     virtual void OnExit() = 0;
 
-    ~Client();
+    AE_API ~Client();
 
     friend EventHandler;
 
   protected:
     const Input *Input = nullptr;
     const Renderer *Renderer = nullptr;
+    const Debug Debug;
 
   private:
-    EventHandler *eventHandler = nullptr;
+    EventHandler eventHandler;
 
     bool isRunning = true;
     std::string name = "Aura Engine";
