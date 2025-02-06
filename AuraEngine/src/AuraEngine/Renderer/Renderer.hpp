@@ -6,6 +6,7 @@
 #include "VertexArray.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
+#include "Camera.hpp"
 
 #include <utility>
 
@@ -18,6 +19,7 @@ namespace AuraEngine {
     void Render() const;
 
     //void SetSize(const std::pair<int, int> &size) const;
+    const float GetAspectRatio() const;
 
     ~Renderer();
 
@@ -32,6 +34,7 @@ namespace AuraEngine {
     VertexArray *DummyVAO = nullptr;
     Shader *shader = nullptr;
     Texture *texture1 = nullptr;
+    Camera *camera = nullptr;
 
     void windowResizeCallback(std::pair<int, int> newSize) const;
   };

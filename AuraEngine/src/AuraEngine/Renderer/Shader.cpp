@@ -53,9 +53,9 @@ namespace AuraEngine {
     glUniform1i(glGetUniformLocation(this->programId, name.c_str()), value);
   }
 
-  void Shader::SetMat4(int location, float *value)
+  void Shader::SetMat4(const std::string &name, const glm::mat4 &matrix) const
   {
-    glUniformMatrix4fv(location, 1, GL_FALSE, value);
+    glUniformMatrix4fv(this->GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
   }
 
   int Shader::GetUniformLocation(const std::string &name) const

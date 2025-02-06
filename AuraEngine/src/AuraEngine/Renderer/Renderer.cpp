@@ -29,11 +29,12 @@ namespace AuraEngine {
 
     out vec2 TexCoord;
 
-    uniform mat4 mvp;
+    uniform mat4 model;
+    uniform mat4 viewProj; // view * projection
 
     void main()
     {
-      gl_Position = mvp * vec4(inPos, 1.0);
+      gl_Position = viewProj * model * vec4(inPos, 1.0);
       TexCoord = inTexCoord;  
     }
   )";
@@ -121,32 +122,32 @@ namespace AuraEngine {
 
     model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    this->camera = new Camera(60.0f, { 0.0f, 0.0f, -1.0f }, this);
   }
 
   void Renderer::Update()const
   {
     this->window->Update();
+    this->camera->updateTransform();
   }
 
   void Renderer::Render()const
   {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -1.0f));
-
-    const std::pair<int, int> &windowSize = this->window->GetSize();
-    glm::mat4 projection;
-    projection = glm::perspective(glm::radians(60.0f), static_cast<float>(windowSize.first) / windowSize.second, 0.1f, 100.0f);
-
-    glm::mat4 mvp = projection * view * model;
-
     this->shader->Use();
-    this->shader->SetMat4(this->shader->GetUniformLocation("mvp"), glm::value_ptr(mvp));
-
+    this->shader->SetMat4("model", model);
+    this->shader->SetMat4("viewProj", this->camera->GetTransform());
     this->texture1->Bind();
     this->DummyVAO->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  }
+
+  const float Renderer::GetAspectRatio() const
+  {
+    const std::pair<int, int> &windowSize = this->window->GetSize();
+    return static_cast<float>(windowSize.first) / windowSize.second;
   }
 
   Renderer::~Renderer()
@@ -155,6 +156,7 @@ namespace AuraEngine {
     delete this->DummyVAO;
     delete this->VBO;
     delete this->window;
+    delete this->camera;
     SDL_Quit();
   }
   void Renderer::windowResizeCallback(std::pair<int, int> newSize) const
