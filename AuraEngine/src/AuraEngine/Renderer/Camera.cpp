@@ -2,6 +2,7 @@
 #include "Renderer.hpp"
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
+#include "../Log/Log.hpp"
 
 namespace AuraEngine
 {
@@ -26,7 +27,9 @@ namespace AuraEngine
 
   void Camera::updateTransform()
   {
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), this->position);
+    glm::vec3 forward = glm::normalize(this->target - this->position);
+
+    glm::mat4 view = glm::lookAt(this->position, this->position + forward, Camera::GLOBAL_UP);
     // TODO: move near and far distances to variables
     glm::mat4 proj = glm::perspective(glm::radians(this->fov), this->renderer->GetAspectRatio(), 0.1f, 100.0f);
     this->transform = proj * view;

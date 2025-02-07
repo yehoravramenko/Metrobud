@@ -10,8 +10,8 @@ void Metrobud::OnStart()
 
 void Metrobud::OnUpdate()
 {
-  if (Input->GetKey(Keycode::W))
-    Debug.Log("W pressed");
+  //if (Input->GetKey(Keycode::W))
+    //this->Renderer->GetCamera()->Move();
 }
 
 void Metrobud::OnRender()

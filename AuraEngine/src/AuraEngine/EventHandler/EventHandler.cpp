@@ -2,7 +2,7 @@
 #include "../Client/Client.hpp"
 #include "../Log/Log.hpp"
 #include <SDL3/SDL.h>
-#include <format>
+#include "../UI/UI.hpp"
 
 namespace AuraEngine {
   EventHandler::EventHandler(Client *const client)
@@ -14,6 +14,7 @@ namespace AuraEngine {
     SDL_Event event = { 0 };
     while (SDL_PollEvent(&event))
     {
+      this->client->Renderer->ui->ProcessSDLEvent(event);
       switch (event.type)
       {
       case SDL_EVENT_QUIT:

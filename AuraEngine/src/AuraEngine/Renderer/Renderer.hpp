@@ -1,6 +1,7 @@
 #pragma once
 #include "../ExportAPI.hpp"
 #include "../Window/Window.hpp"
+#include "../UI/UI.hpp"
 #include <SDL3/SDL.h>
 #include "Buffer.hpp"
 #include "VertexArray.hpp"
@@ -12,22 +13,26 @@
 
 namespace AuraEngine {
   class EventHandler;
+  class Client;
   class AE_API Renderer {
   public:
-    Renderer();
+    Renderer(Client *client);
     void Update() const;
     void Render() const;
 
     //void SetSize(const std::pair<int, int> &size) const;
     const float GetAspectRatio() const;
+    Camera *const GetCamera() const;
 
     ~Renderer();
 
     friend EventHandler;
 
   private:
+    const Client *client = nullptr;
     Window *window = nullptr;
     SDL_GLContext gl_context = nullptr;
+    UI *ui = nullptr;
 
     Buffer *VBO = nullptr;
     Buffer *EBO = nullptr;

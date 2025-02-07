@@ -18,6 +18,8 @@ namespace AuraEngine {
     virtual void OnRender() = 0;
     virtual void OnExit() = 0;
 
+    const double &GetDeltaTime() const;
+
     AE_API ~Client();
 
     friend EventHandler;
@@ -29,6 +31,8 @@ namespace AuraEngine {
 
   private:
     EventHandler eventHandler;
+
+    double deltaTime = 0.0f;
 
     bool isRunning = true;
     std::string name = "Aura Engine";

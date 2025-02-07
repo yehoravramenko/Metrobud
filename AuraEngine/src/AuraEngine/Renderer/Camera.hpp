@@ -16,8 +16,11 @@ namespace AuraEngine
     friend Renderer;
 
   private:
+    static constexpr glm::vec3 GLOBAL_UP{ 0.0f, 1.0f, 1.0f };
+
     float fov = 45.0f;
     glm::vec3 position{};
+    glm::vec3 target{ 0.0f, 0.0f, 0.0f };
     glm::mat4 transform{};
     const Renderer *renderer;
 

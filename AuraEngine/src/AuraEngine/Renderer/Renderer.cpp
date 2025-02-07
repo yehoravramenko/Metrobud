@@ -1,5 +1,6 @@
 #include "Renderer.hpp"
 #include "../Log/Log.hpp"
+#include "../Client/Client.hpp"
 #include <glad/glad.h>
 #include <format>
 
@@ -7,6 +8,10 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <imgui.h>
+#include <imgui_impl_sdl3.h>
+#include <imgui_impl_opengl3.h>
 
 namespace AuraEngine {
   constexpr float vertices[] = {
@@ -55,8 +60,10 @@ namespace AuraEngine {
 
   glm::mat4 model;
 
-  Renderer::Renderer()
+  Renderer::Renderer(Client *client)
   {
+    this->client = client;
+
     if (!SDL_Init(SDL_INIT_VIDEO))
       Log::EngineLog.Error(std::string("Failed to initialize SDL.\nSDL_Error: ") + SDL_GetError());
 
@@ -91,6 +98,9 @@ namespace AuraEngine {
     Log::EngineLog.Info(std::format("OpenGL Vendor: {}", (char *)glGetString(GL_VENDOR)));
     Log::EngineLog.Info(std::format("OpenGL Renderer: {}", (char *)glGetString(GL_RENDERER)));
 
+    this->ui = new UI(this->window->GetSDLWindow(), this->gl_context);
+    this->ui->rootFrame.AddElement({ "deltaTimeText", new UIText{ {0.0f, 0.0f}, "test!" } });
+
     glViewport(0, 0, 800, 600);
     glClearColor(.07f, .07f, .07f, 1.f);
 
@@ -123,18 +133,21 @@ namespace AuraEngine {
     model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-    this->camera = new Camera(60.0f, { 0.0f, 0.0f, -1.0f }, this);
+    this->camera = new Camera(60.0f, { 0.0f, 0.0f, 3.0f }, this);
   }
 
   void Renderer::Update()const
   {
     this->window->Update();
     this->camera->updateTransform();
+
+    dynamic_cast<UIText *>(this->ui->rootFrame.GetElement("deltaTimeText"))->SetText(std::format("deltaTime: {}ms", this->client->GetDeltaTime()));
   }
 
   void Renderer::Render()const
   {
     glClear(GL_COLOR_BUFFER_BIT);
+    this->ui->Update();
 
     this->shader->Use();
     this->shader->SetMat4("model", model);
@@ -142,6 +155,8 @@ namespace AuraEngine {
     this->texture1->Bind();
     this->DummyVAO->Bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    this->ui->Draw();
   }
 
   const float Renderer::GetAspectRatio() const
@@ -150,13 +165,19 @@ namespace AuraEngine {
     return static_cast<float>(windowSize.first) / windowSize.second;
   }
 
+  Camera *const Renderer::GetCamera() const
+  {
+    return this->camera;
+  }
+
   Renderer::~Renderer()
   {
     delete this->shader;
     delete this->DummyVAO;
     delete this->VBO;
-    delete this->window;
+    delete this->ui;
     delete this->camera;
+    delete this->window;
     SDL_Quit();
   }
   void Renderer::windowResizeCallback(std::pair<int, int> newSize) const

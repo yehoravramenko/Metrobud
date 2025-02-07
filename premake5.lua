@@ -9,6 +9,38 @@ workspace "Metrobud"
 
 outputdir = "%{cfg.buildcfg}"
 
+project "dearimgui"
+	location "AuraEngine"
+	kind "StaticLib"
+
+	language "C++"
+	cppdialect "C++20"
+
+	targetdir ("bin/" .. outputdir .. "/AuraEngine")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"thirdparty/src/imgui/**.cpp",
+	}
+
+	includedirs
+	{
+		"thirdparty/include/imgui",
+		"thirdparty/include/SDL3",
+	}
+
+	links
+	{
+		"SDL3.dll"
+	}
+
+	filter "configurations:Debug"
+		symbols "On"
+	
+	filter "configurations:Release"
+		optimize "On"
+
 project "AuraEngine"
 	location "AuraEngine"
 	kind "SharedLib"
@@ -25,7 +57,8 @@ project "AuraEngine"
 		"%{prj.name}/src/**.hpp",
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
-		"thirdparty/src/glad.c"
+
+		"thirdparty/src/glad.c",
 	}
 
 	includedirs
@@ -36,16 +69,18 @@ project "AuraEngine"
 		"thirdparty/include/SDL3",
 		"thirdparty/include/stb",
 		"thirdparty/include/glm",
+		"thirdparty/include/imgui",
 	}
 
 	libdirs
 	{
-		"thirdparty/lib/SDL3"
+		"thirdparty/lib/SDL3",
+		"bin/" .. outputdir .. "/%{prj.name}"
 	}
 
 	links
 	{
-		"opengl32", "SDL3"
+		"opengl32", "SDL3", "dearimgui.lib"
 	}
 
 	defines
@@ -90,7 +125,9 @@ project "Metrobud"
 		-- "thirdparty/include",
 		"thirdparty/include/SDL3",
 		"thirdparty/include/glad",
-		"AuraEngine/src"
+		"thirdparty/include/glm",
+		"thirdparty/include/imgui",
+		"AuraEngine/src",
 	}
 
 	links

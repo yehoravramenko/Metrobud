@@ -1,6 +1,7 @@
 #pragma once
 #include "../ExportAPI.hpp"
 #include <string>
+#include <format>
 
 namespace AuraEngine {
 
