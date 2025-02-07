@@ -10,11 +10,12 @@
 #include "Camera.hpp"
 
 #include <utility>
+#include <memory>
 
 namespace AuraEngine {
   class EventHandler;
   class Client;
-  class AE_API Renderer {
+  class Renderer {
   public:
     Renderer(Client *client);
     void Update() const;
@@ -30,16 +31,17 @@ namespace AuraEngine {
 
   private:
     const Client *client = nullptr;
-    Window *window = nullptr;
     SDL_GLContext gl_context = nullptr;
-    UI *ui = nullptr;
 
-    Buffer *VBO = nullptr;
-    Buffer *EBO = nullptr;
-    VertexArray *DummyVAO = nullptr;
-    Shader *shader = nullptr;
-    Texture *texture1 = nullptr;
-    Camera *camera = nullptr;
+    std::unique_ptr<UI> ui;
+    std::unique_ptr<Window> window;
+
+    std::unique_ptr<Buffer> VBO;
+    std::unique_ptr<Buffer> EBO;
+    std::unique_ptr<VertexArray> DummyVAO;
+    std::unique_ptr<Shader> shader;
+    std::unique_ptr<Texture> texture1;
+    std::unique_ptr<Camera> camera;
 
     void windowResizeCallback(std::pair<int, int> newSize) const;
   };

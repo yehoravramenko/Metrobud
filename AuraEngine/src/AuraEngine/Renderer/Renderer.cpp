@@ -84,7 +84,7 @@ namespace AuraEngine {
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    this->window = new Window();
+    this->window = std::make_unique<Window>();
 
     this->gl_context = SDL_GL_CreateContext(this->window->GetSDLWindow());
     if (!this->gl_context)
@@ -98,7 +98,7 @@ namespace AuraEngine {
     Log::EngineLog.Info(std::format("OpenGL Vendor: {}", (char *)glGetString(GL_VENDOR)));
     Log::EngineLog.Info(std::format("OpenGL Renderer: {}", (char *)glGetString(GL_RENDERER)));
 
-    this->ui = new UI(this->window->GetSDLWindow(), this->gl_context);
+    this->ui = std::make_unique<UI>(this->window->GetSDLWindow(), this->gl_context);
     this->ui->rootFrame.AddElement({ "deltaTimeText", new UIText{ {0.0f, 0.0f}, "test!" } });
 
     glViewport(0, 0, 800, 600);
@@ -109,19 +109,19 @@ namespace AuraEngine {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // downscaling
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);               // upscaling
 
-    this->texture1 = new Texture(R"(E:\aura\Metrobud\resources\kenney_prototype-textures\PNG\Green\texture_01.png)");
+    this->texture1 = std::make_unique<Texture>(R"(E:\aura\Metrobud\resources\kenney_prototype-textures\PNG\Green\texture_01.png)");
 
-    this->shader = new Shader(vert_shader, frag_shader);
+    this->shader = std::make_unique<Shader>(vert_shader, frag_shader);
     this->shader->SetInt("tex1", 0);
 
-    this->DummyVAO = new VertexArray();
+    this->DummyVAO = std::make_unique<VertexArray>();
     this->DummyVAO->Bind();
 
-    this->VBO = new Buffer(GL_ARRAY_BUFFER);
+    this->VBO = std::make_unique<Buffer>(GL_ARRAY_BUFFER);
     this->VBO->Bind();
     this->VBO->SetData(sizeof(vertices), vertices);
 
-    this->EBO = new Buffer(GL_ELEMENT_ARRAY_BUFFER);
+    this->EBO = std::make_unique<Buffer>(GL_ELEMENT_ARRAY_BUFFER);
     this->EBO->Bind();
     this->EBO->SetData(sizeof(indices), indices);
 
@@ -133,7 +133,7 @@ namespace AuraEngine {
     model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-    this->camera = new Camera(60.0f, { 0.0f, 0.0f, 3.0f }, this);
+    this->camera = std::make_unique<Camera>(60.0f, glm::vec3{ 0.0f, 0.0f, 1.0f }, this);
   }
 
   void Renderer::Update()const
@@ -167,17 +167,11 @@ namespace AuraEngine {
 
   Camera *const Renderer::GetCamera() const
   {
-    return this->camera;
+    return this->camera.get();
   }
 
   Renderer::~Renderer()
   {
-    delete this->shader;
-    delete this->DummyVAO;
-    delete this->VBO;
-    delete this->ui;
-    delete this->camera;
-    delete this->window;
     SDL_Quit();
   }
   void Renderer::windowResizeCallback(std::pair<int, int> newSize) const
