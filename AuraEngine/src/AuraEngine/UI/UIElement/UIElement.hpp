@@ -4,12 +4,6 @@
 
 namespace AuraEngine
 {
-  //enum class UIType
-  //{
-  //  Default = 0,
-  //  DebugInfo,
-  //};
-
   class UIElement
   {
   public:
