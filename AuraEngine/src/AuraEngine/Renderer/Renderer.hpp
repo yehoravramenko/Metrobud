@@ -23,7 +23,7 @@ namespace AuraEngine {
 
     //void SetSize(const std::pair<int, int> &size) const;
     const float GetAspectRatio() const;
-    Camera *const GetCamera() const;
+    AE_API Camera *const GetCamera() const;
 
     ~Renderer();
 

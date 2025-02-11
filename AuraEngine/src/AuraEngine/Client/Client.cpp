@@ -19,7 +19,7 @@ namespace AuraEngine {
     {
       last = now;
       now = SDL_GetTicks();
-      deltaTime = static_cast<double>(now - last);
+      deltaTime = static_cast<float>(now - last) / 1000;
 
       this->eventHandler.PollEvents();
 
@@ -32,7 +32,7 @@ namespace AuraEngine {
     this->OnExit();
   }
 
-  const double &Client::GetDeltaTime() const
+  const float &Client::GetDeltaTime() const
   {
     return this->deltaTime;
   }

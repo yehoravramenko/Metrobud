@@ -101,6 +101,8 @@ namespace AuraEngine {
     this->ui = std::make_unique<UI>(this->window->GetSDLWindow(), this->gl_context);
     this->ui->rootFrame.AddElement({ "deltaTimeText", new UIText{ {0.0f, 0.0f}, "test!" } });
 
+    glEnable(GL_DEPTH_TEST);
+
     glViewport(0, 0, 800, 600);
     glClearColor(.07f, .07f, .07f, 1.f);
 
@@ -131,9 +133,9 @@ namespace AuraEngine {
     this->DummyVAO->Unbind();
 
     model = glm::mat4(1.0f);
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-    this->camera = std::make_unique<Camera>(60.0f, glm::vec3{ 0.0f, 0.0f, 1.0f }, this);
+    this->camera = std::make_unique<Camera>(60.0f, glm::vec3{ 0.0f, 0.0f, 3.0f }, this);
   }
 
   void Renderer::Update()const
@@ -141,12 +143,13 @@ namespace AuraEngine {
     this->window->Update();
     this->camera->updateTransform();
 
-    dynamic_cast<UIText *>(this->ui->rootFrame.GetElement("deltaTimeText"))->SetText(std::format("deltaTime: {}ms", this->client->GetDeltaTime()));
+    dynamic_cast<UIText *>(this->ui->rootFrame.GetElement("deltaTimeText"))
+      ->SetText(std::format("deltaTime: {}ms", this->client->GetDeltaTime() * 1000));
   }
 
   void Renderer::Render()const
   {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     this->ui->Update();
 
     this->shader->Use();

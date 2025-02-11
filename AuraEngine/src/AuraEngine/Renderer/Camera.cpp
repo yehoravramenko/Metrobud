@@ -11,13 +11,13 @@ namespace AuraEngine
     this->fov = fov;
     this->position = position;
     this->renderer = renderer;
-
-    //this->updateTransform();
   }
 
-  void Camera::Move(const glm::vec3 &position)
+  void Camera::Translate(const glm::vec3 &translation)
   {
-    this->position += position;
+    this->position.x += translation.x;
+    this->position.y += translation.y;
+    this->position.z -= translation.z;
   }
 
   const glm::mat4 &Camera::GetTransform()
@@ -27,9 +27,7 @@ namespace AuraEngine
 
   void Camera::updateTransform()
   {
-    glm::vec3 forward = glm::normalize(this->target - this->position);
-
-    glm::mat4 view = glm::lookAt(this->position, this->position + forward, Camera::GLOBAL_UP);
+    glm::mat4 view = glm::lookAt(this->position, this->position + Camera::GLOBAL_FRONT, Camera::GLOBAL_UP);
     // TODO: move near and far distances to variables
     glm::mat4 proj = glm::perspective(glm::radians(this->fov), this->renderer->GetAspectRatio(), 0.1f, 100.0f);
     this->transform = proj * view;
