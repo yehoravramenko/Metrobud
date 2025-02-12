@@ -1,7 +1,8 @@
 #include "Metrobud.hpp"
 
-int main() {
-  Metrobud Metrobud{};
-  Metrobud.MainLoop();
-  return 0;
+auto main()
+{
+    Metrobud Metrobud{};
+    Metrobud.MainLoop();
+    return 0;
 }

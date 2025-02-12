@@ -3,18 +3,17 @@
 
 namespace AuraEngine
 {
-  class Client;
+    class Client;
 
-  class AE_API EventHandler
-  {
-  public:
-    EventHandler(Client *const client);
-    void PollEvents();
+    class AE_API EventHandler
+    {
+    public:
+        explicit EventHandler(Client* client);
+        void PollEvents() const;
 
-    ~EventHandler();
+        ~EventHandler();
 
-  private:
-
-    Client *client = nullptr;
-  };
-}
+    private:
+        Client* client = nullptr;
+    };
+} // namespace AuraEngine

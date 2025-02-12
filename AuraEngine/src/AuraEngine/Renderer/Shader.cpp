@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 
 namespace AuraEngine {
-  void Shader::_compileShader(unsigned int &shader, const char *shaderSource) const
+  void Shader::_compileShader(const unsigned int &shader, const char *shaderSource) const
   {
     glShaderSource(shader, 1, &shaderSource, nullptr);
     glCompileShader(shader);
@@ -23,10 +23,10 @@ namespace AuraEngine {
   {
     this->programId = glCreateProgram();
 
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    const unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     this->_compileShader(vertexShader, vertexShaderSrc);
 
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    const unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     this->_compileShader(fragmentShader, fragmentShaderSrc);
 
     glLinkProgram(this->programId);
@@ -48,7 +48,7 @@ namespace AuraEngine {
     glUseProgram(this->programId);
   }
 
-  void Shader::SetInt(const std::string &name, int value) const
+  void Shader::SetInt(const std::string &name, const int value) const
   {
     glUniform1i(glGetUniformLocation(this->programId, name.c_str()), value);
   }

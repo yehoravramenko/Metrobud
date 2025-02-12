@@ -1,33 +1,29 @@
 #include "Renderer.hpp"
-#include "../Log/Log.hpp"
-#include "../Client/Client.hpp"
-#include <glad/glad.h>
 #include <format>
+#include <glad/glad.h>
+#include "../Client/Client.hpp"
+#include "../Log/Log.hpp"
 
-#include <glm/mat4x4.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include <imgui.h>
-#include <imgui_impl_sdl3.h>
-#include <imgui_impl_opengl3.h>
 
-namespace AuraEngine {
-  constexpr float vertices[] = {
-    // positions        // texture coords
-     0.5f,  0.5f, 0.0f, 1.0f, 1.0f,   // top right
-     0.5f, -0.5f, 0.0f, 1.0f, 0.0f,   // bottom right
-    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,   // bottom left
-    -0.5f,  0.5f, 0.0f, 0.0f, 1.0f    // top left 
-  };
+namespace AuraEngine
+{
+    constexpr float vertices[] = {
+        // positions        // texture coords
+        0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
+        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left
+    };
 
-  constexpr unsigned int indices[] = {
+    constexpr unsigned int indices[] = {
         0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
-  };
+        1, 2, 3 // second triangle
+    };
 
-  constexpr char vert_shader[] = R"(
+    constexpr char vert_shader[] = R"(
     #version 460 core
     layout(location=0) in vec3 inPos;
     layout(location=1) in vec2 inTexCoord;
@@ -40,16 +36,16 @@ namespace AuraEngine {
     void main()
     {
       gl_Position = viewProj * model * vec4(inPos, 1.0);
-      TexCoord = inTexCoord;  
+      TexCoord = inTexCoord;
     }
   )";
 
-  constexpr char frag_shader[] = R"(
+    constexpr char frag_shader[] = R"(
     #version 460 core
     out vec4 FragColor;
-    
+
     in vec2 TexCoord;
-    
+
     uniform sampler2D tex1;
 
     void main()
@@ -58,127 +54,134 @@ namespace AuraEngine {
     }
   )";
 
-  glm::mat4 model;
+    glm::mat4 model;
 
-  Renderer::Renderer(Client *client)
-  {
-    this->client = client;
+    Renderer::Renderer(const Client* client)
+    {
+        this->client = client;
 
-    if (!SDL_Init(SDL_INIT_VIDEO))
-      Log::EngineLog.Error(std::string("Failed to initialize SDL.\nSDL_Error: ") + SDL_GetError());
+        if (!SDL_Init(SDL_INIT_VIDEO))
+            Log::EngineLog.Error(std::string("Failed to initialize SDL.\nSDL_Error: ") + SDL_GetError());
 
-    int context_flags = SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG;
+        int context_flags = SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG;
 #ifdef AE_DEBUG
-    context_flags |= SDL_GL_CONTEXT_DEBUG_FLAG;
+        context_flags |= SDL_GL_CONTEXT_DEBUG_FLAG;
 #endif
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, context_flags);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, context_flags);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+        SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+        SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+        SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+        SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+        SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+        SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    this->window = std::make_unique<Window>();
+        if (!SDL_GL_SetSwapInterval(1))
+            Log::EngineLog.Warn("Failed to set swap interval");
 
-    this->gl_context = SDL_GL_CreateContext(this->window->GetSDLWindow());
-    if (!this->gl_context)
-      Log::EngineLog.Error(std::string("Failed to create GL context.\nSDL_Error: ") + SDL_GetError());
+        this->window = std::make_unique<Window>();
 
-    if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
-      Log::EngineLog.Error("Failed to intitialize GLAD.");
+        this->gl_context = SDL_GL_CreateContext(this->window->GetSDLWindow());
+        if (!this->gl_context)
+            Log::EngineLog.Error(std::string("Failed to create GL context.\nSDL_Error: ") + SDL_GetError());
 
-    Log::EngineLog.Info(std::format("OpenGL Version: {}.{}", GLVersion.major, GLVersion.minor));
-    Log::EngineLog.Info(std::format("OpenGL Shading Language Version: {}", (char *)glGetString(GL_SHADING_LANGUAGE_VERSION)));
-    Log::EngineLog.Info(std::format("OpenGL Vendor: {}", (char *)glGetString(GL_VENDOR)));
-    Log::EngineLog.Info(std::format("OpenGL Renderer: {}", (char *)glGetString(GL_RENDERER)));
+        if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress)))
+            Log::EngineLog.Error("Failed to intitialize GLAD.");
 
-    this->ui = std::make_unique<UI>(this->window->GetSDLWindow(), this->gl_context);
-    this->ui->rootFrame.AddElement({ "deltaTimeText", new UIText{ {0.0f, 0.0f}, "test!" } });
+        Log::EngineLog.Info(std::format("OpenGL Version: {}.{}", GLVersion.major, GLVersion.minor));
+        Log::EngineLog.Info(std::format("OpenGL Shading Language Version: {}",
+                                        reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION))));
+        Log::EngineLog.Info(std::format("OpenGL Vendor: {}", reinterpret_cast<const char*>(glGetString(GL_VENDOR))));
+        Log::EngineLog.Info(
+            std::format("OpenGL Renderer: {}", reinterpret_cast<const char*>(glGetString(GL_RENDERER))));
 
-    glEnable(GL_DEPTH_TEST);
+        this->ui = std::make_unique<UI>(this->window->GetSDLWindow(), this->gl_context);
+        this->ui->rootFrame.AddElement({"deltaTimeText", new UIText{{0.0f, 0.0f}, "test!"}});
 
-    glViewport(0, 0, 800, 600);
-    glClearColor(.07f, .07f, .07f, 1.f);
+        glEnable(GL_DEPTH_TEST);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);                   // x texture coordinate
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);                   // y texture coordinate
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // downscaling
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);               // upscaling
+        glViewport(0, 0, 800, 600);
+        glClearColor(.07f, .07f, .07f, 1.f);
 
-    this->texture1 = std::make_unique<Texture>(R"(E:\aura\Metrobud\resources\kenney_prototype-textures\PNG\Green\texture_01.png)");
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // x texture coordinate
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // y texture coordinate
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // downscaling
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // upscaling
 
-    this->shader = std::make_unique<Shader>(vert_shader, frag_shader);
-    this->shader->SetInt("tex1", 0);
+        this->texture1 = std::make_unique<Texture>(
+            R"(E:\aura\Metrobud\resources\kenney_prototype-textures\PNG\Green\texture_01.png)");
 
-    this->DummyVAO = std::make_unique<VertexArray>();
-    this->DummyVAO->Bind();
+        this->shader = std::make_unique<Shader>(vert_shader, frag_shader);
+        this->shader->SetInt("tex1", 0);
 
-    this->VBO = std::make_unique<Buffer>(GL_ARRAY_BUFFER);
-    this->VBO->Bind();
-    this->VBO->SetData(sizeof(vertices), vertices);
+        this->DummyVAO = std::make_unique<VertexArray>();
+        this->DummyVAO->Bind();
 
-    this->EBO = std::make_unique<Buffer>(GL_ELEMENT_ARRAY_BUFFER);
-    this->EBO->Bind();
-    this->EBO->SetData(sizeof(indices), indices);
+        this->VBO = std::make_unique<Buffer>(GL_ARRAY_BUFFER);
+        this->VBO->Bind();
+        this->VBO->SetData(sizeof(vertices), vertices);
 
-    this->DummyVAO->AddVertexAttribPointer("vertexPos", 3, GL_FLOAT, GL_FALSE, 5, 0);
-    this->DummyVAO->AddVertexAttribPointer("texturePos", 2, GL_FLOAT, GL_FALSE, 5, 3);
+        this->EBO = std::make_unique<Buffer>(GL_ELEMENT_ARRAY_BUFFER);
+        this->EBO->Bind();
+        this->EBO->SetData(sizeof(indices), indices);
 
-    this->DummyVAO->Unbind();
+        this->DummyVAO->AddVertexAttribPointer("vertexPos", 3, GL_FLOAT, GL_FALSE, 5, 0);
+        this->DummyVAO->AddVertexAttribPointer("texturePos", 2, GL_FLOAT, GL_FALSE, 5, 3);
 
-    model = glm::mat4(1.0f);
-    //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        VertexArray::Unbind();
 
-    this->camera = std::make_unique<Camera>(60.0f, glm::vec3{ 0.0f, 0.0f, 3.0f }, this);
-  }
+        model = glm::mat4(1.0f);
+        // model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-  void Renderer::Update()const
-  {
-    this->window->Update();
-    this->camera->updateTransform();
+        this->camera = std::make_unique<Camera>(60.0f, glm::vec3{0.0f, 0.0f, 3.0f}, this);
+    }
 
-    dynamic_cast<UIText *>(this->ui->rootFrame.GetElement("deltaTimeText"))
-      ->SetText(std::format("deltaTime: {}ms", this->client->GetDeltaTime() * 1000));
-  }
+    void Renderer::Update() const
+    {
+        this->window->Update();
+        this->camera->updateTransform();
 
-  void Renderer::Render()const
-  {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    this->ui->Update();
+        dynamic_cast<UIText*>(this->ui->rootFrame.GetElement("deltaTimeText"))
+            ->SetText(std::format("deltaTime: {}ms", this->client->GetDeltaTime() * 1000));
+    }
 
-    this->shader->Use();
-    this->shader->SetMat4("model", model);
-    this->shader->SetMat4("viewProj", this->camera->GetTransform());
-    this->texture1->Bind();
-    this->DummyVAO->Bind();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    void Renderer::Render() const
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        this->ui->Update();
 
-    this->ui->Draw();
-  }
+        this->shader->Use();
+        this->shader->SetMat4("model", model);
+        this->shader->SetMat4("viewProj", this->camera->GetTransform());
+        this->texture1->Bind();
+        this->DummyVAO->Bind();
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-  const float Renderer::GetAspectRatio() const
-  {
-    const std::pair<int, int> &windowSize = this->window->GetSize();
-    return static_cast<float>(windowSize.first) / windowSize.second;
-  }
+        this->ui->Draw();
+    }
 
-  Camera *const Renderer::GetCamera() const
-  {
-    return this->camera.get();
-  }
+    float Renderer::GetAspectRatio() const
+    {
+        const auto& [fst, snd] = this->window->GetSize();
+        return static_cast<float>(fst) / static_cast<float>(snd);
+    }
 
-  Renderer::~Renderer()
-  {
-    SDL_Quit();
-  }
-  void Renderer::windowResizeCallback(std::pair<int, int> newSize) const
-  {
-    glViewport(0, 0, newSize.first, newSize.second);
-  }
-}
+    Camera* Renderer::GetCamera() const
+    {
+        return this->camera.get();
+    }
+
+    Renderer::~Renderer()
+    {
+        SDL_Quit();
+    }
+
+    void Renderer::windowResizeCallback(const std::pair<int, int> newSize)
+    {
+        glViewport(0, 0, newSize.first, newSize.second);
+    }
+} // namespace AuraEngine

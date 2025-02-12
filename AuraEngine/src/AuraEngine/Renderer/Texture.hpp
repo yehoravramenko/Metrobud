@@ -5,7 +5,7 @@ namespace AuraEngine {
   class Texture
   {
   public:
-    Texture(const std::string &filename);
+    explicit Texture(const std::string &filename);
     void Bind() const;
 
   private:

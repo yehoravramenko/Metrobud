@@ -15,6 +15,6 @@ namespace AuraEngine {
   private:
     unsigned int programId;
 
-    void _compileShader(unsigned int &shader, const char *shaderSource) const;
+    void _compileShader(const unsigned int &shader, const char *shaderSource) const;
   };
 }

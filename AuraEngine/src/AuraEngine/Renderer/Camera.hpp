@@ -12,7 +12,7 @@ namespace AuraEngine
     Camera(const float &fov, const glm::vec3 &position, const Renderer *renderer);
 
     AE_API void Translate(const glm::vec3 &translation);
-    const glm::mat4 &GetTransform();
+    [[nodiscard]] const glm::mat4 &GetTransform() const;
 
     friend Renderer;
 

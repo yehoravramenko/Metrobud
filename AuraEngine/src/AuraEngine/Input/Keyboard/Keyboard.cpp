@@ -1,16 +1,17 @@
 #include "Keyboard.hpp"
-#include "../../Log/Log.hpp"
 #include <format>
+#include "../../Log/Log.hpp"
 
-namespace AuraEngine {
-  Keyboard::Keyboard()
-  {
-    this->keyboardState = SDL_GetKeyboardState(nullptr);
-  }
+namespace AuraEngine
+{
+    Keyboard::Keyboard()
+    {
+        this->keyboardState = SDL_GetKeyboardState(nullptr);
+    }
 
-  bool Keyboard::KeyPressed(SDL_Scancode scancode) const
-  {
-    return this->keyboardState[scancode];
-  }
+    bool Keyboard::KeyPressed(const SDL_Scancode scancode) const
+    {
+        return this->keyboardState[scancode];
+    }
 
-}
+} // namespace AuraEngine
