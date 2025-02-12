@@ -30,5 +30,5 @@ target_link_libraries(Metrobud
 add_custom_command(TARGET Metrobud POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy 
         ${CMAKE_SOURCE_DIR}/thirdparty/lib/SDL3/SDL3.dll
-        ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/Metrobud/SDL3.dll
+       ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/SDL3.dll
 )

@@ -24,15 +24,10 @@ target_include_directories(AuraEngine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/AuraEngine
     PRIVATE
         ${CMAKE_SOURCE_DIR}/thirdparty/include/glad
-        ${CMAKE_SOURCE_DIR}/thirdparty/include/SDL3
+        ${SDL3_INCLUDE_DIR}
         ${CMAKE_SOURCE_DIR}/thirdparty/include/stb
         ${CMAKE_SOURCE_DIR}/thirdparty/include/glm
         ${CMAKE_SOURCE_DIR}/thirdparty/include/imgui
-)
-
-# Set link directories
-link_directories(
-    ${CMAKE_SOURCE_DIR}/thirdparty/lib/SDL3
 )
 
 # Link libraries
@@ -40,12 +35,11 @@ target_link_libraries(AuraEngine
     PRIVATE
         opengl32
         SDL3
-        # dearimgui
 )
 
 # Post-build command to copy DLL
 add_custom_command(TARGET AuraEngine POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy 
         $<TARGET_FILE:AuraEngine>
-        ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/Metrobud/$<TARGET_FILE_NAME:AuraEngine>
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Metrobud/$<TARGET_FILE_NAME:AuraEngine>
 )
