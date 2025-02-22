@@ -5,14 +5,15 @@
 #include <tuple>
 
 namespace Metrobud {
-class Window
-{
+class Window {
 public:
   Window(const std::tuple<int, int> size, std::string_view title);
+  void Update();
+  ~Window();
 
 private:
   static bool glfwInitialized;
 
-  GLFWwindow* handle = nullptr;
+  GLFWwindow *handle = nullptr;
 };
-}
+} // namespace Metrobud
