@@ -1,23 +1,21 @@
 #pragma once
 #include "Renderer/Renderer.hpp"
 #include "Window/Window.hpp"
+#include <memory>
 
 namespace Metrobud {
 class Client {
 public:
   Client();
-  ~Client();
   void EventLoop();
 
   auto ShouldExit() const -> bool { return this->shouldExit; }
 
 private:
   std::tuple<int, int> size;
-
-  Window *window = nullptr;
   bool shouldExit = false;
 
-  Renderer *renderer = nullptr;
-
-}; // namespace Metrobud
+  std::unique_ptr<Window> window = nullptr;
+  std::unique_ptr<Renderer> renderer = nullptr;
+};
 } // namespace Metrobud

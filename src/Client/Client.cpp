@@ -3,8 +3,8 @@
 namespace Metrobud {
 Client::Client() {
   this->size = std::tuple(800, 600);
-  this->window = new Window(this->size, "Metrobud");
-  this->renderer = new Renderer(this->size);
+  this->window = std::make_unique<Window>(this->size, "Metrobud");
+  this->renderer = std::make_unique<Renderer>(this->size);
 }
 
 void Client::EventLoop() {
@@ -12,10 +12,4 @@ void Client::EventLoop() {
   this->renderer->Update();
   this->renderer->Draw();
 }
-
-Client::~Client() {
-  delete this->renderer;
-  delete this->window;
-}
-
 } // namespace Metrobud
