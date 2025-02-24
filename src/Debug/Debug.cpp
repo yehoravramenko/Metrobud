@@ -7,8 +7,9 @@
 
 enum LogType { Log, Warning, Error };
 
+namespace Metrobud::Debug {
 void _print(LogType logType, std::string_view msg) {
-  std::string fmt = "\x1B[";
+  std::string fmt = "";
   switch (logType) {
   case LogType::Log:
     fmt = "32;1mLOG";
@@ -17,13 +18,11 @@ void _print(LogType logType, std::string_view msg) {
     fmt = "33;1mWARNING";
     break;
   case LogType::Error:
-    fmt = "31;1mERROR:";
+    fmt = "31;1mERROR";
     break;
   }
-  std::println("{}:\t{}\x1B[0m", fmt, msg);
+  std::println("\x1B[{}:\t{}\x1B[0m", fmt, msg);
 }
-
-namespace Metrobud::Debug {
 
 void Log(std::string_view message) { _print(LogType::Log, message); }
 
