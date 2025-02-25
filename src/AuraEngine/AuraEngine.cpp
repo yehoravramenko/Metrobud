@@ -2,12 +2,12 @@
 #include "Application/Application.hpp"
 #include "Debug/Debug.hpp"
 
-
 namespace AuraEngine {
 Engine::Engine() {
-  this->size          = std::tuple(800, 600);
-  this->window        = std::make_unique<Window>(this->size, "Metrobud");
-  this->renderer      = std::make_unique<Renderer>(this->size);
+  this->size   = std::tuple(800, 600);
+  this->window = std::make_unique<Window>(this->size, "Metrobud");
+  // this->renderer      = std::make_unique<Renderer>(this->size);
+  this->renderer      = std::make_unique<Renderer>();
   Input::g_glfwWindow = this->window->GetHandle();
 }
 void Engine::EventLoop() {

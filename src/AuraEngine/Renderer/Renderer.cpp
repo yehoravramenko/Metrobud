@@ -1,7 +1,10 @@
 #include "Renderer.hpp"
 
 namespace AuraEngine {
-Renderer::Renderer(const std::tuple<int, int> size) {
+// Renderer::Renderer(const std::tuple<int, int> size) {
+//   // TODO: init
+// }
+Renderer::Renderer() {
   // TODO: init
 }
 

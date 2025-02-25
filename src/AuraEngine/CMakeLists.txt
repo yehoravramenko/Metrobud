@@ -12,3 +12,9 @@ target_include_directories(AuraEngine PRIVATE .)
 target_include_directories(AuraEngine PRIVATE ../../vendor/include)
 
 target_link_libraries(AuraEngine glfw3)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set_property(TARGET AuraEngine PROPERTY CXX_STANDARD_LIBRARIES optimized) # Release-specific libraries
+else()
+    set_property(TARGET AuraEngine PROPERTY CXX_STANDARD_LIBRARIES debug) # Debug-specific libraries
+endif()
