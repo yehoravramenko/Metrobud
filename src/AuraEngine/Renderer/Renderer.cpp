@@ -1,6 +1,6 @@
 #include "Renderer.hpp"
 
-namespace Metrobud {
+namespace AuraEngine {
 Renderer::Renderer(const std::tuple<int, int> size) {
   // TODO: init
 }
@@ -16,4 +16,4 @@ void Renderer::Draw() {
 Renderer::~Renderer() {
   // TODO: dtor
 }
-} // namespace Metrobud
+} // namespace AuraEngine

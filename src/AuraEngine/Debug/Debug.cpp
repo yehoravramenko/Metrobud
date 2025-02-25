@@ -3,11 +3,10 @@
 #include <cstdlib>
 #include <print>
 #include <string>
-#include <string_view>
 
 enum LogType { Log, Warning, Error };
 
-namespace Metrobud::Debug {
+namespace AuraEngine::Debug {
 void _print(LogType logType, std::string_view msg) {
   std::string fmt = "";
   switch (logType) {
@@ -33,4 +32,4 @@ void Error(std::string_view message, int exitCode) {
   std::exit(exitCode);
 }
 
-} // namespace Metrobud::Debug
+} // namespace AuraEngine::Debug

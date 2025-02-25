@@ -1,7 +1,7 @@
 #include "Window.hpp"
 #include "Debug/Debug.hpp"
 
-namespace Metrobud {
+namespace AuraEngine {
 Window::Window(const std::tuple<int, int> size, std::string_view title) {
   auto res = glfwInit();
   if (!res) {
@@ -20,12 +20,12 @@ Window::Window(const std::tuple<int, int> size, std::string_view title) {
 }
 
 void Window::Update() {
+  glfwPollEvents();
   glfwSwapBuffers(this->handle);
-  Debug::Log("Window::Update()");
 }
 
 Window::~Window() {
   glfwDestroyWindow(this->handle);
   glfwTerminate();
 }
-} // namespace Metrobud
+} // namespace AuraEngine

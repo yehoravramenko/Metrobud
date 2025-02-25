@@ -1,7 +1,7 @@
 #pragma once
 #include <tuple>
 
-namespace Metrobud {
+namespace AuraEngine {
 class Renderer {
 public:
   Renderer(const std::tuple<int, int> size);
@@ -9,4 +9,4 @@ public:
   void Draw();
   ~Renderer();
 };
-} // namespace Metrobud
+} // namespace AuraEngine

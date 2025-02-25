@@ -14,4 +14,5 @@ link_directories("vendor/lib")
 
 # add_subdirectory(vendor/glfw)
 
-add_subdirectory(src)
+add_subdirectory(src/AuraEngine)
+add_subdirectory(src/Metrobud)
