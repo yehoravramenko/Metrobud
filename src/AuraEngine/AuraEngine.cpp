@@ -4,15 +4,15 @@
 
 namespace AuraEngine {
 Engine::Engine() {
-  this->size   = std::tuple(800, 600);
+  this->size   = std::tuple(1280, 720);
   this->window = std::make_unique<Window>(this->size, "Metrobud");
   // this->renderer      = std::make_unique<Renderer>(this->size);
-  this->renderer      = std::make_unique<Renderer>();
+  this->renderer      = std::make_unique<Renderer>(this->size);
   Input::g_glfwWindow = this->window->GetHandle();
 }
 void Engine::EventLoop() {
   if (this->application == nullptr) {
-    Debug::Error("No application class providen to engine");
+    Debug::Error("No application class provided to engine");
   }
   if (this->window->ShouldExit())
     this->shouldExit = true;

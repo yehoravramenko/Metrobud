@@ -11,8 +11,12 @@ public:
 
   void Update();
 
-  auto GetHandle() -> GLFWwindow * { return this->handle; }
-  auto ShouldExit() -> bool { return glfwWindowShouldClose(this->handle); }
+  auto GetHandle() -> GLFWwindow * {
+    return this->handle;
+  }
+  auto ShouldExit() -> bool {
+    return glfwWindowShouldClose(this->handle);
+  }
 
   ~Window();
 

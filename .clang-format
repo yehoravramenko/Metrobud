@@ -5,7 +5,7 @@ AlignConsecutiveAssignments: 'true'
 AlignOperands: 'true'
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: Never
-AllowShortLambdasOnASingleLine: Inline
+AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: 'false'
 
 ...

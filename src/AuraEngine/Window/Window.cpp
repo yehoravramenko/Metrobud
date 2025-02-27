@@ -1,5 +1,6 @@
 #include "Window.hpp"
 #include "Debug/Debug.hpp"
+#include "glad/glad.h"
 
 namespace AuraEngine {
 Window::Window(const std::tuple<int, int> size, std::string_view title) {
@@ -15,7 +16,15 @@ Window::Window(const std::tuple<int, int> size, std::string_view title) {
   this->handle = glfwCreateWindow(std::get<0>(size), std::get<1>(size),
                                   title.data(), nullptr, nullptr);
   if (handle == nullptr) {
+    glfwTerminate();
     Debug::Error("Failed to create GLFW window");
+  }
+
+  glfwMakeContextCurrent(this->handle);
+
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    glfwTerminate();
+    Debug::Error("Failed to load GLAD");
   }
 }
 

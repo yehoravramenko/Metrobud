@@ -1,11 +1,10 @@
 #include "Renderer.hpp"
+#include "glad/glad.h"
 
 namespace AuraEngine {
-// Renderer::Renderer(const std::tuple<int, int> size) {
-//   // TODO: init
-// }
-Renderer::Renderer() {
-  // TODO: init
+Renderer::Renderer(const std::tuple<int, int> size) {
+  glViewport(0, 0, std::get<0>(size), std::get<1>(size));
+  glClearColor(0.0f, 0.5f, 0.0f, 1.0f);
 }
 
 void Renderer::Update() {
@@ -13,7 +12,7 @@ void Renderer::Update() {
 }
 
 void Renderer::Draw() {
-  // TODO: draw
+  glClear(GL_COLOR_BUFFER_BIT);
 }
 
 Renderer::~Renderer() {
