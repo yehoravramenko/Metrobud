@@ -4,11 +4,11 @@
 
 namespace AuraEngine {
 Engine::Engine() {
-  this->size   = std::tuple(1280, 720);
-  this->window = std::make_unique<Window>(this->size, "Metrobud");
-  // this->renderer      = std::make_unique<Renderer>(this->size);
-  this->renderer      = std::make_unique<Renderer>(this->size);
+  this->size          = std::tuple(1280, 720);
+  this->window        = std::make_unique<Window>(this->size, "Metrobud");
   Input::g_glfwWindow = this->window->GetHandle();
+
+  this->renderer = std::make_unique<Renderer>(this->size);
 }
 void Engine::EventLoop() {
   if (this->application == nullptr) {

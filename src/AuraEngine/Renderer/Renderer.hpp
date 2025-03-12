@@ -1,4 +1,5 @@
 #pragma once
+#include "GL/Buffer/Buffer.hpp"
 #include <tuple>
 
 namespace AuraEngine {
@@ -9,5 +10,8 @@ public:
   void Update();
   void Draw();
   ~Renderer();
+
+private:
+  GL::Buffer VBO{GL_ARRAY_BUFFER};
 };
 } // namespace AuraEngine

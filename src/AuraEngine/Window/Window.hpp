@@ -1,5 +1,4 @@
 #pragma once
-#define GLFW_INCLUDE_NONE
 #include "GLFW/glfw3.h"
 #include <string_view>
 #include <tuple>
@@ -11,10 +10,11 @@ public:
 
   void Update();
 
-  auto GetHandle() -> GLFWwindow * {
+  GLFWwindow *GetHandle() {
     return this->handle;
   }
-  auto ShouldExit() -> bool {
+
+  bool ShouldExit() {
     return glfwWindowShouldClose(this->handle);
   }
 

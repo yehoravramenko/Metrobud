@@ -2,7 +2,7 @@
 #include "Metrobud/Client/Client.hpp"
 using namespace AuraEngine;
 
-auto main() -> int {
+int main() {
   Engine engine{};
   Metrobud::Client CL{&engine};
   CL.OnStart();

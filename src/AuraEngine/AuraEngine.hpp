@@ -10,7 +10,7 @@ public:
   Engine();
   void EventLoop();
 
-  auto ShouldExit() const -> bool {
+  bool ShouldExit() const {
     return this->shouldExit;
   }
 
