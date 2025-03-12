@@ -11,18 +11,18 @@ public:
   void Update();
 
   GLFWwindow *GetHandle() {
-    return this->handle;
+    return m_handle;
   }
 
   bool ShouldExit() {
-    return glfwWindowShouldClose(this->handle);
+    return glfwWindowShouldClose(m_handle);
   }
 
   ~Window();
 
 private:
-  static bool glfwInitialized;
+  static bool m_glfwInitialized;
 
-  GLFWwindow *handle = nullptr;
+  GLFWwindow *m_handle = nullptr;
 };
 } // namespace AuraEngine

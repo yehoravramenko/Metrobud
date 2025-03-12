@@ -5,23 +5,25 @@
 #include <memory>
 
 namespace AuraEngine {
+class Application;
+
 class Engine {
 public:
   Engine();
   void EventLoop();
 
   bool ShouldExit() const {
-    return this->shouldExit;
+    return m_shouldExit;
   }
 
-  friend class Application;
+  friend Application;
 
 private:
-  std::tuple<int, int> size;
-  bool shouldExit = false;
+  std::tuple<int, int> m_windowSize;
+  bool m_shouldExit = false;
 
-  std::unique_ptr<Window> window     = nullptr;
-  std::unique_ptr<Renderer> renderer = nullptr;
-  class Application *application     = nullptr;
+  std::unique_ptr<Window> m_window     = nullptr;
+  std::unique_ptr<Renderer> m_renderer = nullptr;
+  Application *m_application           = nullptr;
 };
 } // namespace AuraEngine

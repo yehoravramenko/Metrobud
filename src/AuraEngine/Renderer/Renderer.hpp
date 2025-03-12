@@ -12,6 +12,6 @@ public:
   ~Renderer();
 
 private:
-  GL::Buffer VBO{GL_ARRAY_BUFFER};
+  GL::Buffer m_VBO{GL_ARRAY_BUFFER};
 };
 } // namespace AuraEngine

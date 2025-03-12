@@ -7,7 +7,7 @@ public:
   Shader(const char *vertexShaderSrc, const char *fragmentShaderSrc);
 
 private:
-  unsigned program;
+  unsigned m_program;
 
   static unsigned compileShader(const char *src, GLenum type);
 };

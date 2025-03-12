@@ -6,11 +6,11 @@ enum KeyCode {
   Unknown = -1,
 
   Space        = 32,
-  Apostrophe   = 39, /* ' */
-  Comma        = 44, /* , */
-  Minus        = 45, /* - */
-  Period       = 46, /* . */
-  Slash        = 47, /* / */
+  Apostrophe   = 39, // '
+  Comma        = 44, // ,
+  Minus        = 45, // -
+  Period       = 46, // .
+  Slash        = 47, // /
   Key0         = 48,
   Key1         = 49,
   Key2         = 50,
@@ -21,8 +21,8 @@ enum KeyCode {
   Key7         = 55,
   Key8         = 56,
   Key9         = 57,
-  Semicolon    = 59, /* ; */
-  Equal        = 61, /* = */
+  Semicolon    = 59, // ;
+  Equal        = 61, // =
   A            = 65,
   B            = 66,
   C            = 67,
@@ -49,10 +49,10 @@ enum KeyCode {
   X            = 88,
   Y            = 89,
   Z            = 90,
-  LeftBracket  = 91, /* [ */
+  LeftBracket  = 91, // [
   Backslash    = 92, /* \ */
-  RightBracket = 93, /* ] */
-  GraveAccent  = 96, /* ` */
+  RightBracket = 93, // ]
+  GraveAccent  = 96, // `
 
   Escape      = 256,
   Enter       = 257,

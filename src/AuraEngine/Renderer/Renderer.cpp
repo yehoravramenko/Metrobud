@@ -8,7 +8,7 @@ Renderer::Renderer(const std::tuple<int, int> size) {
   glViewport(0, 0, std::get<0>(size), std::get<1>(size));
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-  this->VBO.Data(sizeof(vertices), vertices);
+  m_VBO.Data(sizeof(vertices), vertices);
 }
 
 void Renderer::Update() {

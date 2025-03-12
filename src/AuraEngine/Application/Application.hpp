@@ -12,8 +12,10 @@ public:
   virtual void OnDraw()   = 0;
   virtual void OnExit()   = 0;
 
+  virtual ~Application() = default;
+
 private:
-  AuraEngine::Engine *engine;
+  AuraEngine::Engine *m_engine;
 
 protected:
   virtual void Exit() final;

@@ -13,14 +13,14 @@ Window::Window(const std::tuple<int, int> size, std::string_view title) {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  this->handle = glfwCreateWindow(std::get<0>(size), std::get<1>(size),
-                                  title.data(), nullptr, nullptr);
-  if (handle == nullptr) {
+  m_handle = glfwCreateWindow(std::get<0>(size), std::get<1>(size),
+                              title.data(), nullptr, nullptr);
+  if (m_handle == nullptr) {
     glfwTerminate();
     Debug::Error("Failed to create GLFW window");
   }
 
-  glfwMakeContextCurrent(this->handle);
+  glfwMakeContextCurrent(m_handle);
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     glfwTerminate();
@@ -30,11 +30,11 @@ Window::Window(const std::tuple<int, int> size, std::string_view title) {
 
 void Window::Update() {
   glfwPollEvents();
-  glfwSwapBuffers(this->handle);
+  glfwSwapBuffers(m_handle);
 }
 
 Window::~Window() {
-  glfwDestroyWindow(this->handle);
+  glfwDestroyWindow(m_handle);
   glfwTerminate();
 }
 } // namespace AuraEngine
