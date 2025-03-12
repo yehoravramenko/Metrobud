@@ -1,8 +1,9 @@
 #pragma once
+#include "../GLObject.hpp"
 #include "glad/glad.h"
 
 namespace AuraEngine::GL {
-class Buffer {
+class Buffer : private GLObject {
 public:
   Buffer(const GLenum target);
   void Bind() const;
@@ -14,7 +15,6 @@ public:
   ~Buffer();
 
 private:
-  unsigned m_handle;
   GLenum m_target;
 };
 } // namespace AuraEngine::GL

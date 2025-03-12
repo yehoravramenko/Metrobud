@@ -1,13 +1,11 @@
 #pragma once
+#include "../GLObject.hpp"
 
 namespace AuraEngine::GL {
-class VertexArray {
+class VertexArray : private GLObject {
 public:
   VertexArray();
   void Bind() const;
   ~VertexArray();
-
-private:
-  unsigned m_handle;
 };
 } // namespace AuraEngine::GL

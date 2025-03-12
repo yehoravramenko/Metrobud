@@ -8,15 +8,15 @@ Shader::Shader(const std::string vertexShaderSrc,
   GLuint vert = Shader::compileShader(vertexShaderSrc, GL_VERTEX_SHADER);
   GLuint frag = Shader::compileShader(fragmentShaderSrc, GL_FRAGMENT_SHADER);
 
-  m_program = glCreateProgram();
-  glAttachShader(m_program, vert);
-  glAttachShader(m_program, frag);
-  glLinkProgram(m_program);
+  m_handle = glCreateProgram();
+  glAttachShader(m_handle, vert);
+  glAttachShader(m_handle, frag);
+  glLinkProgram(m_handle);
   int success;
-  glGetProgramiv(m_program, GL_LINK_STATUS, &success);
+  glGetProgramiv(m_handle, GL_LINK_STATUS, &success);
   if (!success) {
     char info[512];
-    glGetProgramInfoLog(m_program, 512, nullptr, info);
+    glGetProgramInfoLog(m_handle, 512, nullptr, info);
     Debug::Error(
         std::format("Failed to link program. Details:\n ({})\n", info));
   }
@@ -25,7 +25,7 @@ Shader::Shader(const std::string vertexShaderSrc,
 }
 
 void Shader::Use() const {
-  glUseProgram(m_program);
+  glUseProgram(m_handle);
 }
 
 unsigned Shader::compileShader(const std::string &src, const GLenum type) {
