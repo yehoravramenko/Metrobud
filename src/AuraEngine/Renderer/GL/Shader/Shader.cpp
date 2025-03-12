@@ -3,7 +3,8 @@
 #include <format>
 
 namespace AuraEngine::GL {
-Shader::Shader(const char *vertexShaderSrc, const char *fragmentShaderSrc) {
+Shader::Shader(const std::string vertexShaderSrc,
+               const std::string fragmentShaderSrc) {
   GLuint vert = Shader::compileShader(vertexShaderSrc, GL_VERTEX_SHADER);
   GLuint frag = Shader::compileShader(fragmentShaderSrc, GL_FRAGMENT_SHADER);
 
@@ -11,27 +12,34 @@ Shader::Shader(const char *vertexShaderSrc, const char *fragmentShaderSrc) {
   glAttachShader(m_program, vert);
   glAttachShader(m_program, frag);
   glLinkProgram(m_program);
-  int failure;
-  glGetProgramiv(m_program, GL_LINK_STATUS, &failure);
-  if (failure) {
+  int success;
+  glGetProgramiv(m_program, GL_LINK_STATUS, &success);
+  if (!success) {
     char info[512];
     glGetProgramInfoLog(m_program, 512, nullptr, info);
     Debug::Error(
-        std::format("Failed to link program. Details:\n (%s)\n", info));
+        std::format("Failed to link program. Details:\n ({})\n", info));
   }
+  glDeleteShader(vert);
+  glDeleteShader(frag);
 }
 
-unsigned Shader::compileShader(const char *src, GLenum type) {
-  unsigned shader = glCreateShader(type);
-  glShaderSource(shader, 1, &src, nullptr);
+void Shader::Use() const {
+  glUseProgram(m_program);
+}
+
+unsigned Shader::compileShader(const std::string &src, const GLenum type) {
+  unsigned shader     = glCreateShader(type);
+  const char *src_ptr = src.c_str();
+  glShaderSource(shader, 1, &src_ptr, nullptr);
   glCompileShader(shader);
-  int failure;
-  glGetShaderiv(shader, GL_COMPILE_STATUS, &failure);
-  if (failure) {
+  int success;
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+  if (!success) {
     char info[512];
     glGetShaderInfoLog(shader, 512, nullptr, info);
     Debug::Error(
-        std::format("Failed to compile shader. Details:\n (%s)\n", info));
+        std::format("Failed to compile shader. Details:\n ({})\n", info));
   }
   return shader;
 }

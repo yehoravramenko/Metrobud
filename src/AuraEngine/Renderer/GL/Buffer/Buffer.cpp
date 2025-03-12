@@ -2,19 +2,30 @@
 
 namespace AuraEngine::GL {
 Buffer::Buffer(const GLenum target) {
-  this->target = target;
-  glCreateBuffers(1, &this->buffer);
+  m_target = target;
+  glCreateBuffers(1, &m_handle);
 }
 
 void Buffer::Bind() const {
-  glBindBuffer(this->target, this->buffer);
+  glBindBuffer(m_target, m_handle);
 }
 
-void Buffer::Data(size_t size, const void *data, GLenum usage) const {
-  glNamedBufferData(this->buffer, size, data, usage);
+void Buffer::Data(const size_t size, const void *data,
+                  const GLenum usage) const {
+  glNamedBufferData(m_handle, size, data, usage);
+}
+
+void Buffer::VertexAttribPointer(const int index, const int size,
+                                 const int stride, int offset) const {
+  glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride * sizeof(float),
+                        (void *)(offset * sizeof(float)));
+}
+
+void Buffer::EnableVertexAttribArray(const int index) const {
+  glEnableVertexAttribArray(index);
 }
 
 Buffer::~Buffer() {
-  glDeleteBuffers(1, &this->buffer);
+  glDeleteBuffers(1, &m_handle);
 }
 } // namespace AuraEngine::GL
