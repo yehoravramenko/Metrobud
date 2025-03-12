@@ -23,7 +23,7 @@ else()
         # Debug-specific settings
         message(STATUS "Configuring for Debug build")
         add_definitions(-DDEBUG) # Example: Define a DEBUG_MODE macro
-        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic") # Add extra warnings
+        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Werror") # Add extra warnings
         set(OUTPUT_DIR "${CMAKE_BINARY_DIR}/Debug")
 endif()
 
