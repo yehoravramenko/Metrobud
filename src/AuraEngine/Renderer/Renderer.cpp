@@ -1,29 +1,50 @@
 #include "Renderer.hpp"
+#include "OpenGL/OpenGL.hpp"
 
 namespace AuraEngine {
-const float vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f,
-                          0.0f,  0.0f,  0.5f, 0.0f};
+const float vertices[] = {
+    // positions        // texture coords
+    0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
+    0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+    -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // top left
+};
+
+const unsigned int indices[] = {
+    0, 1, 3, // first triangle
+    1, 2, 3  // second triangle
+};
 
 const std::string vs_src = R"(
 #version 460 core
 layout (location = 0) in vec3 inPos;
+layout (location = 1) in vec2 inTexCoord;
+
+out vec2 TexCoord;
 
 void main() {
   gl_Position = vec4(inPos, 1.0f);
+  TexCoord = inTexCoord;
 }
 )";
 
 const std::string fs_src = R"(
 #version 460 core
+in vec2 TexCoord;
+
 out vec4 FragColor;
 
+uniform sampler2D tex;
+
 void main() {
-  FragColor = vec4(0.0f, 0.5f, 0.0f, 1.0f);
+  FragColor = texture(tex, TexCoord);
 }
 )";
 
 Renderer::Renderer(const std::tuple<int, int> size)
-    : m_dummyShader(vs_src, fs_src) {
+    : m_VBO(GL_ARRAY_BUFFER), m_EBO(GL_ELEMENT_ARRAY_BUFFER),
+      m_dummyShader(vs_src, fs_src),
+      m_testTex("../metrobud/textures/kenney_prototype/Green/texture_01.png") {
   glViewport(0, 0, std::get<0>(size), std::get<1>(size));
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -32,8 +53,13 @@ Renderer::Renderer(const std::tuple<int, int> size)
   m_VBO.Bind();
   m_VBO.Data(sizeof(vertices), vertices);
 
-  m_VBO.VertexAttribPointer(0, 3, 3, 0);
-  m_VBO.EnableVertexAttribArray(0);
+  m_EBO.Bind();
+  m_EBO.Data(sizeof(indices), indices);
+
+  OpenGL::VertexAttribPointer(0, 3, 5, 0);
+  OpenGL::EnableVertexAttribArray(0);
+  OpenGL::VertexAttribPointer(1, 2, 5, 3);
+  OpenGL::EnableVertexAttribArray(1);
 }
 
 void Renderer::Update() {
@@ -43,9 +69,9 @@ void Renderer::Update() {
 void Renderer::Draw() {
   glClear(GL_COLOR_BUFFER_BIT);
 
-  m_VAO.Bind();
   m_dummyShader.Use();
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  m_VAO.Bind();
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 Renderer::~Renderer() {

@@ -1,8 +1,9 @@
 #include "Shader.hpp"
-#include <Debug/Debug.hpp>
+#include "Debug/Debug.hpp"
+#include "glad/glad.h"
 #include <format>
 
-namespace AuraEngine::GL {
+namespace AuraEngine::OpenGL {
 Shader::Shader(const std::string vertexShaderSrc,
                const std::string fragmentShaderSrc) {
   GLuint vert = Shader::compileShader(vertexShaderSrc, GL_VERTEX_SHADER);
@@ -28,6 +29,10 @@ void Shader::Use() const {
   glUseProgram(m_handle);
 }
 
+void Shader::SetInt(const std::string &name, const int value) const {
+  glUniform1i(glGetUniformLocation(m_handle, name.c_str()), value);
+}
+
 unsigned Shader::compileShader(const std::string &src, const GLenum type) {
   unsigned shader     = glCreateShader(type);
   const char *src_ptr = src.c_str();
@@ -43,4 +48,4 @@ unsigned Shader::compileShader(const std::string &src, const GLenum type) {
   }
   return shader;
 }
-} // namespace AuraEngine::GL
+} // namespace AuraEngine::OpenGL

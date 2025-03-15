@@ -1,7 +1,8 @@
 #pragma once
-#include "GL/Buffer/Buffer.hpp"
-#include "GL/Shader/Shader.hpp"
-#include "GL/VertexArray/VertexArray.hpp"
+#include "OpenGL/Buffer/Buffer.hpp"
+#include "OpenGL/Shader/Shader.hpp"
+#include "OpenGL/Texture/Texture.hpp"
+#include "OpenGL/VertexArray/VertexArray.hpp"
 #include <tuple>
 
 namespace AuraEngine {
@@ -14,8 +15,10 @@ public:
   ~Renderer();
 
 private:
-  GL::VertexArray m_VAO;
-  GL::Buffer m_VBO{GL_ARRAY_BUFFER};
-  GL::Shader m_dummyShader;
+  OpenGL::VertexArray m_VAO;
+  OpenGL::Buffer m_VBO;
+  OpenGL::Buffer m_EBO;
+  OpenGL::Shader m_dummyShader;
+  OpenGL::Texture m_testTex;
 };
 } // namespace AuraEngine

@@ -17,9 +17,11 @@ link_directories("${CMAKE_BINARY_DIR}/lib")
 
 target_link_libraries(Metrobud AuraEngine)
 
+
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set_property(TARGET Metrobud PROPERTY CXX_STANDARD_LIBRARIES optimized) # Release-specific libraries
     string(REPLACE "-g" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}") # Remove -g (GCC/Clang)
 else()
     set_property(TARGET Metrobud PROPERTY CXX_STANDARD_LIBRARIES debug) # Debug-specific libraries
+    set(OUTPUT_NAME "Metrobud_debug")
 endif()

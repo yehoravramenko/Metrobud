@@ -1,7 +1,7 @@
 #include "VertexArray.hpp"
 #include "glad/glad.h"
 
-namespace AuraEngine::GL {
+namespace AuraEngine::OpenGL {
 VertexArray::VertexArray() {
   glCreateVertexArrays(1, &m_handle);
 }
@@ -13,4 +13,4 @@ void VertexArray::Bind() const {
 VertexArray::~VertexArray() {
   glDeleteVertexArrays(1, &m_handle);
 }
-} // namespace AuraEngine::GL
+} // namespace AuraEngine::OpenGL
