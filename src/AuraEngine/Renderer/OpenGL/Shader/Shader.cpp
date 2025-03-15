@@ -4,8 +4,8 @@
 #include <format>
 
 namespace AuraEngine::OpenGL {
-Shader::Shader(const std::string vertexShaderSrc,
-               const std::string fragmentShaderSrc) {
+Shader::Shader(const std::string &vertexShaderSrc,
+               const std::string &fragmentShaderSrc) {
   GLuint vert = Shader::compileShader(vertexShaderSrc, GL_VERTEX_SHADER);
   GLuint frag = Shader::compileShader(fragmentShaderSrc, GL_FRAGMENT_SHADER);
 
@@ -31,6 +31,11 @@ void Shader::Use() const {
 
 void Shader::SetInt(const std::string &name, const int value) const {
   glUniform1i(glGetUniformLocation(m_handle, name.c_str()), value);
+}
+
+void Shader::SetMat4(const std::string &name, const glm::mat4 &mat) const {
+  glUniformMatrix4fv(glGetUniformLocation(m_handle, name.c_str()), 1, GL_FALSE,
+                     &mat[0][0]);
 }
 
 unsigned Shader::compileShader(const std::string &src, const GLenum type) {

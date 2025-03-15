@@ -1,5 +1,8 @@
 #include "Renderer.hpp"
 #include "OpenGL/OpenGL.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace AuraEngine {
 const float vertices[] = {
@@ -22,8 +25,10 @@ layout (location = 1) in vec2 inTexCoord;
 
 out vec2 TexCoord;
 
+uniform mat4 mvp;
+
 void main() {
-  gl_Position = vec4(inPos, 1.0f);
+  gl_Position = mvp * vec4(inPos, 1.0f);
   TexCoord = inTexCoord;
 }
 )";
@@ -45,6 +50,8 @@ Renderer::Renderer(const std::tuple<int, int> size)
     : m_VBO(GL_ARRAY_BUFFER), m_EBO(GL_ELEMENT_ARRAY_BUFFER),
       m_dummyShader(vs_src, fs_src),
       m_testTex("../metrobud/textures/kenney_prototype/Green/texture_01.png") {
+  glEnable(GL_DEPTH_TEST);
+
   glViewport(0, 0, std::get<0>(size), std::get<1>(size));
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -60,6 +67,20 @@ Renderer::Renderer(const std::tuple<int, int> size)
   OpenGL::EnableVertexAttribArray(0);
   OpenGL::VertexAttribPointer(1, 2, 5, 3);
   OpenGL::EnableVertexAttribArray(1);
+
+  auto proj = glm::perspective(
+      glm::radians(60.0f),
+      static_cast<float>(std::get<0>(size)) / std::get<1>(size), 0.1f, 100.0f);
+
+  auto view = glm::mat4(1.0f);
+  view      = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+  auto model = glm::mat4(1.0f);
+  model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+  auto mvp = proj * view * model;
+  m_dummyShader.Use();
+  m_dummyShader.SetMat4("mvp", mvp);
 }
 
 void Renderer::Update() {
@@ -67,7 +88,7 @@ void Renderer::Update() {
 }
 
 void Renderer::Draw() {
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   m_dummyShader.Use();
   m_VAO.Bind();
