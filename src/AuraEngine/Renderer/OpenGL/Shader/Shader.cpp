@@ -1,5 +1,5 @@
 #include "Shader.hpp"
-#include "Debug/Debug.hpp"
+#include "AuraEngine/Debug/Debug.hpp"
 #include "glad/glad.h"
 #include <format>
 

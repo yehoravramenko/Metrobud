@@ -1,6 +1,6 @@
 #pragma once
-#include "AuraEngine.hpp"
-#include "Input/Input.hpp"
+#include "../AuraEngine.hpp"
+#include "../Input/Input.hpp"
 
 namespace AuraEngine {
 class Application {

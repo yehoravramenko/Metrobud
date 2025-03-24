@@ -1,5 +1,5 @@
 #include "Texture.hpp"
-#include "Debug/Debug.hpp"
+#include "AuraEngine/Debug/Debug.hpp"
 #include <format>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"

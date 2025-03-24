@@ -1,5 +1,5 @@
 #include "Input.hpp"
-#include "Debug/Debug.hpp"
+#include "AuraEngine/Debug/Debug.hpp"
 
 namespace AuraEngine {
 GLFWwindow *Input::g_glfwWindow = nullptr;

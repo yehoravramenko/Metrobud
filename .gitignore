@@ -49,4 +49,9 @@ CMakeUserPresets.json
 build
 .cache
 
+*.sln
+*.vcxproj*
+.vs/
+
+game/
 !vendor/lib/**

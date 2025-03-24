@@ -1,5 +1,5 @@
 #include "Window.hpp"
-#include "Debug/Debug.hpp"
+#include "AuraEngine/Debug/Debug.hpp"
 #include "glad/glad.h"
 
 namespace AuraEngine {
