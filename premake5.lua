@@ -23,6 +23,8 @@ project "AuraEngine"
 
   includedirs {SRC_ROOT, INC_VENDOR, "vendor/RGFW"}
 
+  disablewarnings {"4133"}
+
   filter "configurations:Debug"
   defines { "DEBUG" }
   symbols "On"
@@ -30,9 +32,6 @@ project "AuraEngine"
   filter "configurations:Release"
   defines { "NDEBUG" }
   optimize "On"
-  
-  -- filter "files:vendor/RGFW/RGFW.c"
-  -- disablewarnings {"static-in-inline"}
 
 
 project "Metrobud"
