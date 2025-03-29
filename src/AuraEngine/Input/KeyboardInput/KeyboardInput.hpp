@@ -1,139 +1,145 @@
 #pragma once
-#include "GLFW/glfw3.h"
+#include <SDL3/SDL_scancode.h>
 
-namespace AuraEngine {
-enum KeyCode {
-  Unknown = -1,
+namespace AuraEngine
+{
+  enum KeyCode
+  {
+    Unknown = -1,
 
-  Space        = 32,
-  Apostrophe   = 39, // '
-  Comma        = 44, // ,
-  Minus        = 45, // -
-  Period       = 46, // .
-  Slash        = 47, // /
-  Key0         = 48,
-  Key1         = 49,
-  Key2         = 50,
-  Key3         = 51,
-  Key4         = 52,
-  Key5         = 53,
-  Key6         = 54,
-  Key7         = 55,
-  Key8         = 56,
-  Key9         = 57,
-  Semicolon    = 59, // ;
-  Equal        = 61, // =
-  A            = 65,
-  B            = 66,
-  C            = 67,
-  D            = 68,
-  E            = 69,
-  F            = 70,
-  G            = 71,
-  H            = 72,
-  I            = 73,
-  J            = 74,
-  K            = 75,
-  L            = 76,
-  M            = 77,
-  N            = 78,
-  O            = 79,
-  P            = 80,
-  Q            = 81,
-  R            = 82,
-  S            = 83,
-  T            = 84,
-  U            = 85,
-  V            = 86,
-  W            = 87,
-  X            = 88,
-  Y            = 89,
-  Z            = 90,
-  LeftBracket  = 91, // [
-  Backslash    = 92, /* \ */
-  RightBracket = 93, // ]
-  GraveAccent  = 96, // `
+    Space = SDL_SCANCODE_SPACE,
+    Apostrophe = SDL_SCANCODE_APOSTROPHE, // '
+    Comma = SDL_SCANCODE_COMMA, // ,
+    Minus = SDL_SCANCODE_MINUS, // -
+    Period = SDL_SCANCODE_PERIOD, // .
+    Slash = SDL_SCANCODE_SLASH, // /
+    Key0 = SDL_SCANCODE_0,
+    Key1 = SDL_SCANCODE_1,
+    Key2 = SDL_SCANCODE_2,
+    Key3 = SDL_SCANCODE_3,
+    Key4 = SDL_SCANCODE_4,
+    Key5 = SDL_SCANCODE_5,
+    Key6 = SDL_SCANCODE_6,
+    Key7 = SDL_SCANCODE_7,
+    Key8 = SDL_SCANCODE_8,
+    Key9 = SDL_SCANCODE_9,
+    Semicolon = SDL_SCANCODE_SEMICOLON, // ;
+    Equal = SDL_SCANCODE_EQUALS, // =
+    A = SDL_SCANCODE_A,
+    B = SDL_SCANCODE_B,
+    C = SDL_SCANCODE_C,
+    D = SDL_SCANCODE_D,
+    E = SDL_SCANCODE_E,
+    F = SDL_SCANCODE_F,
+    G = SDL_SCANCODE_G,
+    H = SDL_SCANCODE_H,
+    I = SDL_SCANCODE_I,
+    J = SDL_SCANCODE_J,
+    K = SDL_SCANCODE_K,
+    L = SDL_SCANCODE_L,
+    M = SDL_SCANCODE_M,
+    N = SDL_SCANCODE_N,
+    O = SDL_SCANCODE_O,
+    P = SDL_SCANCODE_P,
+    Q = SDL_SCANCODE_Q,
+    R = SDL_SCANCODE_R,
+    S = SDL_SCANCODE_S,
+    T = SDL_SCANCODE_T,
+    U = SDL_SCANCODE_U,
+    V = SDL_SCANCODE_V,
+    W = SDL_SCANCODE_W,
+    X = SDL_SCANCODE_X,
+    Y = SDL_SCANCODE_Y,
+    Z = SDL_SCANCODE_Z,
+    LeftBracket = SDL_SCANCODE_LEFTBRACKET, // [
+    Backslash = SDL_SCANCODE_BACKSLASH, /* \ */
+    RightBracket = SDL_SCANCODE_RIGHTBRACKET, // ]
+    GraveAccent = SDL_SCANCODE_GRAVE, // `
 
-  Escape      = 256,
-  Enter       = 257,
-  Tab         = 258,
-  Backspace   = 259,
-  Insert      = 260,
-  Deelte      = 261,
-  Right       = 262,
-  Left        = 263,
-  Down        = 264,
-  Up          = 265,
-  PageUp      = 266,
-  PageDown    = 267,
-  Home        = 268,
-  End         = 269,
-  CapsLock    = 280,
-  ScrollLock  = 281,
-  NumLock     = 282,
-  PrintScreen = 283,
-  Pause       = 284,
-  F1          = 290,
-  F2          = 291,
-  F3          = 292,
-  F4          = 293,
-  F5          = 294,
-  F6          = 295,
-  F7          = 296,
-  F8          = 297,
-  F9          = 298,
-  F10         = 299,
-  F11         = 300,
-  F12         = 301,
-  F13         = 302,
-  F14         = 303,
-  F15         = 304,
-  F16         = 305,
-  F17         = 306,
-  F18         = 307,
-  F19         = 308,
-  F20         = 309,
-  F21         = 310,
-  F22         = 311,
-  F23         = 312,
-  F24         = 313,
-  F25         = 314,
+    Escape = SDL_SCANCODE_ESCAPE,
+    Enter = SDL_SCANCODE_RETURN,
+    Tab = SDL_SCANCODE_TAB,
+    Backspace = SDL_SCANCODE_BACKSPACE,
+    Insert = SDL_SCANCODE_INSERT,
+    Delete = SDL_SCANCODE_DELETE,
+    Right = SDL_SCANCODE_RIGHT,
+    Left = SDL_SCANCODE_LEFT,
+    Down = SDL_SCANCODE_DOWN,
+    Up = SDL_SCANCODE_UP,
+    PageUp = SDL_SCANCODE_PAGEUP,
+    PageDown = SDL_SCANCODE_PAGEDOWN,
+    Home = SDL_SCANCODE_HOME,
+    End = SDL_SCANCODE_END,
+    CapsLock = SDL_SCANCODE_CAPSLOCK,
+    ScrollLock = SDL_SCANCODE_SCROLLLOCK,
+    NumLock = SDL_SCANCODE_NUMLOCKCLEAR,
+    PrintScreen = SDL_SCANCODE_PRINTSCREEN,
+    Pause = SDL_SCANCODE_PAUSE,
+    F1 = SDL_SCANCODE_F1,
+    F2 = SDL_SCANCODE_F2,
+    F3 = SDL_SCANCODE_F3,
+    F4 = SDL_SCANCODE_F4,
+    F5 = SDL_SCANCODE_F5,
+    F6 = SDL_SCANCODE_F6,
+    F7 = SDL_SCANCODE_F7,
+    F8 = SDL_SCANCODE_F8,
+    F9 = SDL_SCANCODE_F9,
+    F10 = SDL_SCANCODE_F10,
+    F11 = SDL_SCANCODE_F11,
+    F12 = SDL_SCANCODE_F12,
+    F13 = SDL_SCANCODE_F13,
+    F14 = SDL_SCANCODE_F14,
+    F15 = SDL_SCANCODE_F15,
+    F16 = SDL_SCANCODE_F16,
+    F17 = SDL_SCANCODE_F17,
+    F18 = SDL_SCANCODE_F18,
+    F19 = SDL_SCANCODE_F19,
+    F20 = SDL_SCANCODE_F20,
+    F21 = SDL_SCANCODE_F21,
+    F22 = SDL_SCANCODE_F22,
+    F23 = SDL_SCANCODE_F23,
+    F24 = SDL_SCANCODE_F24,
 
-  Num0        = 320,
-  Num1        = 321,
-  Num2        = 322,
-  Num3        = 323,
-  Num4        = 324,
-  Num5        = 325,
-  Num6        = 326,
-  Num7        = 327,
-  Num8        = 328,
-  Num9        = 329,
-  NumDecimal  = 330,
-  NumDivide   = 331,
-  NumMultiply = 332,
-  NumSubtract = 333,
-  NumAdd      = 334,
-  NumEnter    = 335,
-  NumEqual    = 336,
+    Num0 = SDL_SCANCODE_KP_1,
+    Num1 = SDL_SCANCODE_KP_2,
+    Num2 = SDL_SCANCODE_KP_3,
+    Num3 = SDL_SCANCODE_KP_4,
+    Num4 = SDL_SCANCODE_KP_5,
+    Num5 = SDL_SCANCODE_KP_6,
+    Num6 = SDL_SCANCODE_KP_7,
+    Num7 = SDL_SCANCODE_KP_8,
+    Num8 = SDL_SCANCODE_KP_9,
+    Num9 = SDL_SCANCODE_KP_0,
+    NumPeriod = SDL_SCANCODE_KP_PERIOD,
+    NumSlash = SDL_SCANCODE_KP_DIVIDE,
+    NumMultiply = SDL_SCANCODE_KP_MULTIPLY,
+    NumMinus = SDL_SCANCODE_KP_MINUS,
+    NumAdd = SDL_SCANCODE_KP_PLUS,
+    NumEnter = SDL_SCANCODE_KP_ENTER,
 
-  LeftShift  = 340,
-  LeftCtrl   = 341,
-  LeftAlt    = 342,
-  LeftWin    = 343,
-  RightShift = 344,
-  RightCtrl  = 345,
-  RightAlt   = 346,
-  RightWin   = 347,
-  Menu       = 348,
-};
+    /************************************************************************/
+    /*                        Check Key Modifiers                           */
+    /************************************************************************/
 
-enum KeyState {
-  Press   = GLFW_PRESS,
-  Release = GLFW_RELEASE,
-};
+    /*LeftShift = 340,
+    LeftCtrl = 341,
+    LeftAlt = 342,
+    LeftWin = 343,
+    RightShift = 344,
+    RightCtrl = 345,
+    RightAlt = 346,
+    RightWin = 347,
+    Menu = 348,*/
+  };
 
-namespace KeyboardInput {
-KeyState GetKeyState(GLFWwindow *window, const KeyCode keycode);
-}
+  enum KeyState
+  {
+    Pressed,
+    Released,
+  };
+
+  namespace KeyboardInput
+  {
+    KeyState GetKeyState(const KeyCode keycode);
+  }
 } // namespace AuraEngine

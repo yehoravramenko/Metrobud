@@ -1,22 +1,20 @@
 #include "Input.hpp"
 #include "AuraEngine/Debug/Debug.hpp"
 
-namespace AuraEngine {
-GLFWwindow *Input::g_glfwWindow = nullptr;
-
-bool Input::GetKey(const KeyCode keycode) {
-  if (g_glfwWindow == nullptr) {
-    Debug::Warning("Input::GetKey() => Native window is not set");
-    return false;
+namespace AuraEngine
+{
+  bool Input::GetKey(const KeyCode keycode)
+  {
+    /*if(g_sdlWindow == nullptr)
+    {
+      Debug::Warning("Input::GetKey() => Native window is not set");
+      return false;
+    }*/
+    return KeyboardInput::GetKeyState(keycode) == KeyState::Pressed;
   }
-  return KeyboardInput::GetKeyState(g_glfwWindow, keycode) == KeyState::Press;
-}
 
-bool Input::GetKeyRelease(const KeyCode keycode) {
-  if (g_glfwWindow == nullptr) {
-    Debug::Warning("Input::GetKeyRelease() => Native window is not set");
-    return false;
+  bool Input::GetKeyRelease(const KeyCode keycode)
+  {
+    return KeyboardInput::GetKeyState(keycode) == KeyState::Released;
   }
-  return KeyboardInput::GetKeyState(g_glfwWindow, keycode) == KeyState::Release;
-}
 } // namespace AuraEngine

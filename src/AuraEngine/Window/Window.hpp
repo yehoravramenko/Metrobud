@@ -1,28 +1,30 @@
 #pragma once
-#include "GLFW/glfw3.h"
+#include "AuraEngine/AE_API.hpp"
 #include <string_view>
 #include <tuple>
+#include <SDL3/SDL.h>
 
-namespace AuraEngine {
-class Window {
-public:
-  Window(const std::tuple<int, int> size, std::string_view title);
+namespace AuraEngine
+{
+  class Window
+  {
+  public:
+    Window(const std::tuple<int, int> &size, std::string_view title);
 
-  void Update();
+    void Update();
 
-  GLFWwindow *GetHandle() {
-    return m_handle;
-  }
+    SDL_Window *const GetHandle() const
+    {
+      return m_handle;
+    }
 
-  bool ShouldExit() {
-    return glfwWindowShouldClose(m_handle);
-  }
+    bool ShouldExit() const;
 
-  ~Window();
+    AE_API ~Window();
 
-private:
-  static bool m_glfwInitialized;
-
-  GLFWwindow *m_handle = nullptr;
-};
+  private:
+    SDL_Window *m_handle = nullptr;
+    SDL_GLContext m_glContext;
+    bool m_shouldExit = false;
+  };
 } // namespace AuraEngine

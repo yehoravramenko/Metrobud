@@ -1,18 +1,19 @@
 #pragma once
+#include "AuraEngine/AE_API.hpp"
 #include "KeyboardInput/KeyboardInput.hpp"
 
-namespace AuraEngine {
-class Engine;
-class Input {
-public:
-  static bool GetKey(const KeyCode keycode);
-  static bool GetKeyRelease(const KeyCode keycode);
+namespace AuraEngine
+{
+  namespace Input
+  {
+    AE_API bool GetKey(const KeyCode keycode);
+    AE_API bool GetKeyRelease(const KeyCode keycode);
 
-  static bool GetMouseButton(); // TODO
+    // bool GetMouseButton(); // TODO
+  }
 
-  friend Engine;
-
-private:
-  static GLFWwindow *g_glfwWindow;
-};
-} // namespace AuraEngine
+  /*namespace InputNativeAPI
+  {
+    SDL_Window *g_sdlWindow;
+  }*/
+}
