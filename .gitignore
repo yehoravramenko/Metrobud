@@ -54,4 +54,4 @@ build
 .vs/
 
 game/
-!vendor/lib/**
+!vendor/**/*.lib

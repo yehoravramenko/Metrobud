@@ -13,9 +13,4 @@ namespace AuraEngine
     AE_API bool GetMouseButton(const MouseButton mouseButton);
     AE_API const std::tuple<float, float> GetCursorPosition();
   }
-
-  /*namespace InputNativeAPI
-  {
-    SDL_Window *g_sdlWindow;
-  }*/
 }
