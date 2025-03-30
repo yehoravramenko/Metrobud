@@ -1,11 +1,14 @@
 #include "Application.hpp"
-namespace AuraEngine {
-Application::Application(AuraEngine::Engine *engine) {
-  m_engine                = engine;
-  m_engine->m_application = this;
-}
+namespace AuraEngine
+{
+  Application::Application(AuraEngine::Engine *engine)
+  {
+    this->engine = engine;
+    this->engine->application = this;
+  }
 
-void Application::Exit() {
-  m_engine->m_shouldExit = true;
-}
+  void Application::Exit()
+  {
+    this->engine->shouldExit = true;
+  }
 } // namespace AuraEngine

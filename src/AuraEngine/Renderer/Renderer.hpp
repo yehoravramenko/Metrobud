@@ -4,6 +4,9 @@
 #include "OpenGL/Shader/Shader.hpp"
 #include "OpenGL/Texture/Texture.hpp"
 #include "OpenGL/VertexArray/VertexArray.hpp"
+
+#include "Camera.hpp"
+
 #include <tuple>
 
 namespace AuraEngine
@@ -17,10 +20,12 @@ namespace AuraEngine
     AE_API ~Renderer();
 
   private:
-    OpenGL::VertexArray m_VAO;
-    OpenGL::Buffer m_VBO;
-    OpenGL::Buffer m_EBO;
-    OpenGL::Shader m_dummyShader;
-    OpenGL::Texture m_testTex;
+    OpenGL::VertexArray VAO;
+    OpenGL::Buffer VBO;
+    OpenGL::Buffer EBO;
+    OpenGL::Shader dummyShader;
+    OpenGL::Texture testTex;
+
+    Camera camera;
   };
 } // namespace AuraEngine

@@ -18,7 +18,7 @@ namespace AuraEngine
     virtual ~Application() = default;
 
   private:
-    AuraEngine::Engine *m_engine;
+    AuraEngine::Engine *engine;
 
   protected:
     AE_API virtual void Exit() final;

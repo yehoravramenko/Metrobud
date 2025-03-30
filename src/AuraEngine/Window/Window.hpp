@@ -15,7 +15,7 @@ namespace AuraEngine
 
     SDL_Window *const GetHandle() const
     {
-      return m_handle;
+      return this->handle;
     }
 
     bool ShouldExit() const;
@@ -23,8 +23,8 @@ namespace AuraEngine
     AE_API ~Window();
 
   private:
-    SDL_Window *m_handle = nullptr;
-    SDL_GLContext m_glContext;
-    bool m_shouldExit = false;
+    SDL_Window *handle = nullptr;
+    SDL_GLContext glContext;
+    bool shouldExit = false;
   };
 } // namespace AuraEngine

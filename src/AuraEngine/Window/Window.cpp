@@ -22,23 +22,23 @@ namespace AuraEngine
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
     unsigned int windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN;
-    m_handle = SDL_CreateWindow(title.data(), std::get<0>(size), std::get<1>(size), windowFlags);
-    if(m_handle == nullptr)
+    this->handle = SDL_CreateWindow(title.data(), std::get<0>(size), std::get<1>(size), windowFlags);
+    if(this->handle == nullptr)
     {
       Debug::Error("Failed to create window");
     }
 
-    SDL_SetWindowPosition(m_handle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+    SDL_SetWindowPosition(this->handle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
-    m_glContext = SDL_GL_CreateContext(m_handle);
-    if(m_glContext == nullptr)
+    this->glContext = SDL_GL_CreateContext(this->handle);
+    if(this->glContext == nullptr)
     {
       Debug::Error("Failed to initialize OpenGL context");
     }
 
-    SDL_GL_MakeCurrent(m_handle, m_glContext);
+    SDL_GL_MakeCurrent(this->handle, this->glContext);
     SDL_GL_SetSwapInterval(1);
-    SDL_ShowWindow(m_handle);
+    SDL_ShowWindow(this->handle);
 
     if(!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
     {
@@ -53,21 +53,21 @@ namespace AuraEngine
     {
       if(event.type == SDL_EVENT_QUIT)
       {
-        m_shouldExit = true;
+        this->shouldExit = true;
       }
     }
-    SDL_GL_SwapWindow(m_handle);
+    SDL_GL_SwapWindow(this->handle);
   }
 
   bool Window::ShouldExit() const
   {
-    return m_shouldExit;
+    return this->shouldExit;
   }
 
   Window::~Window()
   {
-    SDL_GL_DestroyContext(m_glContext);
-    SDL_DestroyWindow(m_handle);
+    SDL_GL_DestroyContext(this->glContext);
+    SDL_DestroyWindow(this->handle);
     SDL_Quit();
   }
 } // namespace AuraEngine

@@ -6,31 +6,31 @@ namespace AuraEngine
 {
   Engine::Engine()
   {
-    m_windowSize = std::tuple(1280, 720);
-    m_window = std::make_unique<Window>(m_windowSize, "Metrobud");
+    this->windowSize = std::tuple(1280, 720);
+    this->window = std::make_unique<Window>(this->windowSize, "Metrobud");
 
-    m_renderer = std::make_unique<Renderer>(m_windowSize);
+    this->renderer = std::make_unique<Renderer>(this->windowSize);
   }
 
   void Engine::EventLoop()
   {
-    if(m_application == nullptr)
+    if(this->application == nullptr)
     {
       Debug::Error("No application class provided to engine");
     }
 
-    if(m_window->ShouldExit())
+    if(this->window->ShouldExit())
     {
-      m_shouldExit = true;
+      this->shouldExit = true;
     }
 
-    m_window->Update();
-    m_renderer->Update();
+    this->window->Update();
+    this->renderer->Update();
 
-    m_application->OnUpdate();
+    this->application->OnUpdate();
 
-    m_renderer->Draw();
+    this->renderer->Draw();
 
-    m_application->OnDraw();
+    this->application->OnDraw();
   }
 } // namespace AuraEngine

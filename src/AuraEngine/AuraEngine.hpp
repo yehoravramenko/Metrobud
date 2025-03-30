@@ -17,17 +17,17 @@ namespace AuraEngine
 
     bool ShouldExit() const
     {
-      return m_shouldExit;
+      return this->shouldExit;
     }
 
     friend Application;
 
   private:
-    std::tuple<int, int> m_windowSize;
-    bool m_shouldExit = false;
+    std::tuple<int, int> windowSize;
+    bool shouldExit = false;
 
-    std::unique_ptr<Window> m_window = nullptr;
-    std::unique_ptr<Renderer> m_renderer = nullptr;
-    Application *m_application = nullptr;
+    std::unique_ptr<Window> window = nullptr;
+    std::unique_ptr<Renderer> renderer = nullptr;
+    Application *application = nullptr;
   };
 } // namespace AuraEngine

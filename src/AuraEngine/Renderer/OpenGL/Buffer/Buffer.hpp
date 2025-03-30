@@ -15,6 +15,6 @@ namespace AuraEngine::OpenGL
     ~Buffer();
 
   private:
-    GLenum m_target;
+    GLenum target;
   };
 } // namespace AuraEngine::OpenGL
