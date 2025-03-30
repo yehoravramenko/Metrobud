@@ -134,8 +134,8 @@ namespace AuraEngine
 
   enum KeyState
   {
-    Pressed,
     Released,
+    Pressed,
   };
 
   namespace KeyboardInput

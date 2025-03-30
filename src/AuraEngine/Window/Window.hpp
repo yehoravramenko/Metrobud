@@ -1,5 +1,5 @@
 #pragma once
-#include "AuraEngine/AE_API.hpp"
+#include "AE_API.hpp"
 #include <string_view>
 #include <tuple>
 #include <SDL3/SDL.h>

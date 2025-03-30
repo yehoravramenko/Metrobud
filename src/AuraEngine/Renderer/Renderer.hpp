@@ -1,5 +1,5 @@
 #pragma once
-#include "AuraEngine/AE_API.hpp"
+#include "AE_API.hpp"
 #include "OpenGL/Buffer/Buffer.hpp"
 #include "OpenGL/Shader/Shader.hpp"
 #include "OpenGL/Texture/Texture.hpp"
@@ -11,6 +11,8 @@
 
 namespace AuraEngine
 {
+  class Engine;
+
   class Renderer
   {
   public:
@@ -18,6 +20,11 @@ namespace AuraEngine
     void Update();
     void Draw();
     AE_API ~Renderer();
+
+    Camera *GetMainCamera()
+    {
+      return &camera;
+    }
 
   private:
     OpenGL::VertexArray VAO;

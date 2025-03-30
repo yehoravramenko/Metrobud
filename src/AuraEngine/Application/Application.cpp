@@ -5,6 +5,7 @@ namespace AuraEngine
   {
     this->engine = engine;
     this->engine->application = this;
+    this->mainCamera = this->engine->renderer->GetMainCamera();
   }
 
   void Application::Exit()

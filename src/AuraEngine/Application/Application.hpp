@@ -1,5 +1,6 @@
 #pragma once
-#include "AuraEngine/AE_API.hpp"
+#include "AE_API.hpp"
+#include "Renderer/Camera.hpp"
 #include "../AuraEngine.hpp"
 #include "../Input/Input.hpp"
 
@@ -17,10 +18,12 @@ namespace AuraEngine
 
     virtual ~Application() = default;
 
+  protected:
+    Camera *mainCamera = nullptr;
+
+    AE_API virtual void Exit() final;
+
   private:
     AuraEngine::Engine *engine;
-
-  protected:
-    AE_API virtual void Exit() final;
   };
 } // namespace AuraEngine

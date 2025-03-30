@@ -4,6 +4,9 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+#include "Debug/Debug.hpp"
+#include <format>
+
 namespace AuraEngine
 {
   const float vertices[] = {
@@ -78,11 +81,11 @@ void main() {
 }
 )";
 
-  Renderer::Renderer(const std::tuple<int, int> size)
-    : VBO(GL_ARRAY_BUFFER), EBO(GL_ELEMENT_ARRAY_BUFFER),
+  Renderer::Renderer(const std::tuple<int, int> size) :
+    VBO(GL_ARRAY_BUFFER), EBO(GL_ELEMENT_ARRAY_BUFFER),
     dummyShader(vs_src, fs_src),
     testTex("../metrobud/textures/kenney_prototype/Green/texture_01.png"),
-    camera(static_cast<float>(std::get<0>(size)) / std::get<1>(size), { 0.0f, 0.0f, 2.0f })
+    camera(size, { 0.0f, 0.0f, 2.0f })
   {
     glEnable(GL_DEPTH_TEST);
 
@@ -101,18 +104,19 @@ void main() {
     OpenGL::EnableVertexAttribArray(0);
     OpenGL::VertexAttribPointer(1, 2, 5, 3);
     OpenGL::EnableVertexAttribArray(1);
+  }
 
+  void Renderer::Update()
+  {
     auto model = Matrix4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), Vector3(1.0f, 0.0f, 0.0f));
 
     auto mvp = this->camera.GetViewProjectionMatrix() * model;
     this->dummyShader.Use();
     this->dummyShader.SetMat4("mvp", mvp);
-  }
 
-  void Renderer::Update()
-  {
-    // TODO: update
+    Vector3 camPos = this->camera.GetPosition();
+    Debug::Log(std::format("Camera position is {} {} {}", camPos.x, camPos.y, camPos.z));
   }
 
   void Renderer::Draw()

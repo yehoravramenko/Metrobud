@@ -1,5 +1,5 @@
 #include "Window.hpp"
-#include "AuraEngine/Debug/Debug.hpp"
+#include "Debug/Debug.hpp"
 
 #include <SDL3/SDL.h>
 #include "glad/glad.h"

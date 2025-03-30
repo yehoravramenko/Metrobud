@@ -1,4 +1,4 @@
-#include "AuraEngine/AuraEngine.hpp"
+#include "AuraEngine.hpp"
 #include "Metrobud/Client/Client.hpp"
 using namespace AuraEngine;
 

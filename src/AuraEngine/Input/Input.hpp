@@ -1,6 +1,7 @@
 #pragma once
-#include "AuraEngine/AE_API.hpp"
+#include "AE_API.hpp"
 #include "KeyboardInput/KeyboardInput.hpp"
+#include "MouseInput/MouseInput.hpp"
 
 namespace AuraEngine
 {
@@ -9,7 +10,8 @@ namespace AuraEngine
     AE_API bool GetKey(const KeyCode keycode);
     AE_API bool GetKeyRelease(const KeyCode keycode);
 
-    // bool GetMouseButton(); // TODO
+    AE_API bool GetMouseButton(const MouseButton mouseButton);
+    AE_API const std::tuple<float, float> GetCursorPosition();
   }
 
   /*namespace InputNativeAPI

@@ -29,7 +29,7 @@ project "AuraEngine"
 
   defines {"AE_DLL"}
 
-  includedirs {SRC_ROOT, INC_SDL, INC_GLAD, INC_GLM, INC_STB_IMAGE}
+  includedirs {SRC_ROOT.."AuraEngine", INC_SDL, INC_GLAD, INC_GLM, INC_STB_IMAGE}
 
   libdirs {SDL_FOLDER .. "lib/x64"}
   links {"SDL3.lib"}
@@ -55,7 +55,7 @@ project "Metrobud"
   
   files { METROBUD_SRC .. "**.cpp", METROBUD_SRC .. "**.hpp" }
   
-  includedirs {SRC_ROOT, INC_SDL, INC_GLAD, INC_GLM}
+  includedirs {SRC_ROOT, SRC_ROOT.."AuraEngine", INC_SDL, INC_GLAD, INC_GLM}
   
   links {"AuraEngine"}
   

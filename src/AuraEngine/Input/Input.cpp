@@ -1,15 +1,10 @@
 #include "Input.hpp"
-#include "AuraEngine/Debug/Debug.hpp"
+#include "Debug/Debug.hpp"
 
 namespace AuraEngine
 {
   bool Input::GetKey(const KeyCode keycode)
   {
-    /*if(g_sdlWindow == nullptr)
-    {
-      Debug::Warning("Input::GetKey() => Native window is not set");
-      return false;
-    }*/
     return KeyboardInput::GetKeyState(keycode) == KeyState::Pressed;
   }
 
@@ -17,4 +12,15 @@ namespace AuraEngine
   {
     return KeyboardInput::GetKeyState(keycode) == KeyState::Released;
   }
+
+  bool Input::GetMouseButton(const MouseButton mouseButton)
+  {
+    return MouseInput::GetMouseButton(mouseButton);
+  }
+
+  const std::tuple<float, float> Input::GetCursorPosition()
+  {
+    return MouseInput::GetCursorPosition();
+  }
+
 } // namespace AuraEngine

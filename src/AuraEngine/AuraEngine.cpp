@@ -1,6 +1,6 @@
 #include "AuraEngine.hpp"
 #include "Application/Application.hpp"
-#include "AuraEngine/Debug/Debug.hpp"
+#include "Debug/Debug.hpp"
 
 namespace AuraEngine
 {
