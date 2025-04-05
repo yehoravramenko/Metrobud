@@ -1,12 +1,15 @@
 #include "Window.hpp"
 #include "Debug/Debug.hpp"
+#include "Input/Input.hpp"
 
 #include <SDL3/SDL.h>
 #include "glad/glad.h"
 
 namespace AuraEngine
 {
-  Window::Window(const std::tuple<int, int> &size, std::string_view title)
+  SDL_Window *InputNativeAPI::NativeWindow;
+
+  Window::Window(WindowSize size, std::string_view title)
   {
     if(!SDL_Init(SDL_INIT_VIDEO))
     {
@@ -22,7 +25,7 @@ namespace AuraEngine
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
     unsigned int windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN;
-    this->handle = SDL_CreateWindow(title.data(), std::get<0>(size), std::get<1>(size), windowFlags);
+    this->handle = SDL_CreateWindow(title.data(), size.width, size.height, windowFlags);
     if(this->handle == nullptr)
     {
       Debug::Error("Failed to create window");
@@ -44,6 +47,8 @@ namespace AuraEngine
     {
       Debug::Error("Failed to load GLAD");
     }
+
+    InputNativeAPI::NativeWindow = this->handle;
   }
 
   void Window::Update()

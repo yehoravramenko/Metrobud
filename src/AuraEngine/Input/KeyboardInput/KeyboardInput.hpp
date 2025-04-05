@@ -1,9 +1,11 @@
 #pragma once
+#include "AE_API.hpp"
+
 #include <SDL3/SDL_scancode.h>
 
 namespace AuraEngine
 {
-  enum KeyCode
+  enum class KeyCode
   {
     Unknown = -1,
 
@@ -132,14 +134,17 @@ namespace AuraEngine
     Menu = 348,*/
   };
 
-  enum KeyState
+  enum class KeyState
   {
     Released,
     Pressed,
   };
 
-  namespace KeyboardInput
+  namespace Input
   {
     KeyState GetKeyState(const KeyCode keycode);
+
+    AE_API bool GetKey(const KeyCode keycode);
+    AE_API bool GetKeyUp(const KeyCode keycode);
   }
 } // namespace AuraEngine

@@ -1,13 +1,14 @@
 #pragma once
 #include "AE_API.hpp"
+
+#include "Window/Window.hpp"
+
 #include "OpenGL/Buffer/Buffer.hpp"
 #include "OpenGL/Shader/Shader.hpp"
 #include "OpenGL/Texture/Texture.hpp"
 #include "OpenGL/VertexArray/VertexArray.hpp"
 
 #include "Camera.hpp"
-
-#include <tuple>
 
 namespace AuraEngine
 {
@@ -16,7 +17,7 @@ namespace AuraEngine
   class Renderer
   {
   public:
-    Renderer(const std::tuple<int, int> size);
+    Renderer(const WindowSize windowSize);
     void Update();
     void Draw();
     AE_API ~Renderer();

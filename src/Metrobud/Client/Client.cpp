@@ -1,15 +1,24 @@
 #include "Client.hpp"
 #include "Debug/Debug.hpp"
+
 using namespace AuraEngine;
 
-float speed = 0.1f;
-float sensitivity = 100.0f;
+constexpr float sensitivity = 0.1f;
+bool firstClick = true;
+Vector2 prevCursorPos{ 0, 0 };
+float yaw = 0.0f;
+float pitch = 0.0f;
+
+constexpr float normalFOV = 60.0f;
+constexpr float zoomFOV = 20.0f;
+constexpr float zoomSpeed = 4.0f;
+float zoomProgress = 0.0f;
+bool camZoomed = false;
 
 namespace Metrobud
 {
   void Client::OnStart()
   {
-    Debug::Log("Client::OnStart called!");
   }
 
   void Client::OnUpdate()
@@ -19,32 +28,101 @@ namespace Metrobud
       Application::Exit();
     }
 
+    auto direction = Vector3(0.0f);
+    auto &camFront = this->mainCamera->GetFront();
+    auto &camUp = this->mainCamera->GetUp();
+    auto &camPos = this->mainCamera->GetPosition();
+
+    auto camSpeed = 5.0f * GetDeltaTime();
+
     if(Input::GetKey(KeyCode::W))
     {
-      this->mainCamera->Translate(speed * Vector3{ 0.0f, 0.0f, 1.0f });
+      direction += camFront * camSpeed;
     }
     if(Input::GetKey(KeyCode::S))
     {
-      this->mainCamera->Translate(speed * Vector3{ 0.0f, 0.0f, -1.0f });
+      direction += camSpeed * -camFront;
     }
     if(Input::GetKey(KeyCode::A))
     {
-      this->mainCamera->Translate(speed * Vector3{ -1.0f, 0.0f, 0.0f });
+      direction += camSpeed * -glm::normalize(glm::cross(camFront, camUp));
     }
     if(Input::GetKey(KeyCode::D))
     {
-      this->mainCamera->Translate(speed * Vector3{ 1.0f, 0.0f, 0.0f });
+      direction += camSpeed * glm::normalize(glm::cross(camFront, camUp));
     }
 
-    /*const std::tuple<float, float> &mousePosition = Input::GetCursorPosition();
-    float rotationX = sensitivity * (std::get<1>(mousePosition) - std::get<1>(this->))*/
+    this->mainCamera->Translate(direction);
+
+    if(Input::GetMouseButton(MouseButton::Right))
+    {
+      auto cursorPos = Input::GetCursorPosition();
+
+      if(firstClick)
+      {
+        Input::SetCursorVisibility(false);
+        prevCursorPos = cursorPos;
+        firstClick = false;
+      }
+
+      auto cursorDelta = (cursorPos - prevCursorPos) * sensitivity;
+
+      yaw -= cursorDelta.x;
+      pitch += cursorDelta.y;
+
+      pitch = Math::Clamp(pitch, -89.0f, 89.0f);
+
+      if(yaw >= 360)
+      {
+        yaw -= 360;
+      }
+      else if(yaw <= -360)
+      {
+        yaw += 360;
+      }
+
+      Quaternion rotation{ Math::EulerAngles(pitch, yaw, 0.0f) };
+      this->mainCamera->Rotate(rotation);
+
+      prevCursorPos = cursorPos;
+    }
+    else
+    {
+      Input::SetCursorVisibility(true);
+      firstClick = true;
+    }
+
+    if(Input::GetKey(KeyCode::B) && !camZoomed)
+    {
+      zoomProgress += zoomSpeed * GetDeltaTime();
+      this->mainCamera->SetFOV(Math::Lerp(normalFOV, zoomFOV, zoomProgress));
+      if(zoomProgress >= 1.0f)
+      {
+        zoomProgress = 0.0f;
+        camZoomed = true;
+      }
+    }
+    else if(Input::GetKeyUp(KeyCode::B) && camZoomed)
+    {
+      zoomProgress += zoomSpeed * GetDeltaTime();
+      this->mainCamera->SetFOV(Math::Lerp(zoomFOV, normalFOV, zoomProgress));
+      if(zoomProgress >= 1.0f)
+      {
+        zoomProgress = 0.0f;
+        camZoomed = false;
+      }
+    }
+    else if(Input::GetKeyUp(KeyCode::B) && !camZoomed && zoomProgress != 0.0f)
+    {
+      camZoomed = true;
+      zoomProgress = 1.0f - zoomProgress;
+    }
   }
 
   void Client::OnDraw() {}
 
   void Client::OnExit()
   {
-    Debug::Log("Client::OnExit called!");
   }
 
 } // namespace Metrobud

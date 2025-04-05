@@ -1,27 +1,33 @@
 #pragma once
+#include "AE_API.hpp"
+#include "Window/Window.hpp"
 #include "Renderer/GameObject.hpp"
-#include "AuraMath.hpp"
-
-#include <tuple>
+#include "Math.hpp"
 
 namespace AuraEngine
 {
   class Camera : public GameObject
   {
   public:
-    Camera(const std::tuple<int, int> &size, const Vector3 position = { 0.0f, 0.0f, 0.0f });
+    Camera(const WindowSize windowSize, Vector3 position = { 0.0f, 0.0f, 0.0f });
+
+    AE_API void Rotate(Quaternion &rotation);
+    AE_API void SetFOV(const float fov);
 
     const Matrix4 GetViewProjectionMatrix();
+    auto GetFront() -> const Vector3 & { return this->front; };
+    auto GetUp() -> const Vector3 & { return this->up; };
+    auto GetFOV() -> const float & { return this->fieldOfView; }
 
   private:
-    std::tuple<int, int> screenSize;
     float aspectRatio;
     float fieldOfView = 60.0f;
 
-    Vector3 orientation{ 0.0f, 0.0f, -1.0f };
+    WindowSize windowSize;
+
+    Vector3 front{ 0.0f, 0.0f, -1.0f };
     Vector3 up{ 0.0f, 1.0f, 0.0f };
 
-    Matrix4 view;
-    Matrix4 projection;
+    Quaternion rotation;
   };
 }

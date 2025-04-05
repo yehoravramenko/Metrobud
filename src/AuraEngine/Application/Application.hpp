@@ -18,6 +18,10 @@ namespace AuraEngine
 
     virtual ~Application() = default;
 
+    AE_API int GetWindowWidth() const;
+    AE_API int GetWindowHeight() const;
+    AE_API const float GetDeltaTime() const;
+
   protected:
     Camera *mainCamera = nullptr;
 

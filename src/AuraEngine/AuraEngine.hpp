@@ -20,11 +20,15 @@ namespace AuraEngine
       return this->shouldExit;
     }
 
+    const float GetDeltaTime() const;
+
     friend Application;
 
   private:
-    std::tuple<int, int> windowSize;
+    WindowSize windowSize;
     bool shouldExit = false;
+
+    Uint64 timeNow, timeLast;
 
     std::unique_ptr<Window> window = nullptr;
     std::unique_ptr<Renderer> renderer = nullptr;

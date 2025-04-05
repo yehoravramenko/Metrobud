@@ -1,6 +1,6 @@
 #pragma once
-#include <tuple>
-
+#include "AE_API.hpp"
+#include "Math.hpp"
 
 namespace AuraEngine
 {
@@ -11,9 +11,12 @@ namespace AuraEngine
     Right = 0x04,
   };
 
-  namespace MouseInput
+  namespace Input
   {
-    bool GetMouseButton(const MouseButton mouseButton);
-    const std::tuple<float, float> GetCursorPosition();
+    AE_API bool GetMouseButton(const MouseButton mouseButton);
+
+    AE_API const Vector2 GetCursorPosition();
+    AE_API void SetCursorVisibility(const bool visible);
+    AE_API void SetCursorPosition(const float x, const float y);
   }
 }

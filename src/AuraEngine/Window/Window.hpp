@@ -1,15 +1,19 @@
 #pragma once
 #include "AE_API.hpp"
 #include <string_view>
-#include <tuple>
 #include <SDL3/SDL.h>
 
 namespace AuraEngine
 {
+  struct WindowSize
+  {
+    int width, height;
+  };
+
   class Window
   {
   public:
-    Window(const std::tuple<int, int> &size, std::string_view title);
+    Window(WindowSize size, std::string_view title);
 
     void Update();
 

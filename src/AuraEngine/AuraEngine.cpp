@@ -6,10 +6,18 @@ namespace AuraEngine
 {
   Engine::Engine()
   {
-    this->windowSize = std::tuple(1280, 720);
+    this->timeLast = 0;
+    this->timeNow = SDL_GetPerformanceCounter();
+
+    this->windowSize = { 1280, 720 };
     this->window = std::make_unique<Window>(this->windowSize, "Metrobud");
 
     this->renderer = std::make_unique<Renderer>(this->windowSize);
+  }
+
+  const float Engine::GetDeltaTime() const
+  {
+    return (this->timeNow - this->timeLast) / static_cast<float>(SDL_GetPerformanceFrequency());
   }
 
   void Engine::EventLoop()
@@ -23,6 +31,9 @@ namespace AuraEngine
     {
       this->shouldExit = true;
     }
+
+    this->timeLast = this->timeNow;
+    this->timeNow = SDL_GetPerformanceCounter();
 
     this->window->Update();
     this->renderer->Update();
