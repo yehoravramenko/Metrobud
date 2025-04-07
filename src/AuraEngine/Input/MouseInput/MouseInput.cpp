@@ -31,4 +31,9 @@ namespace AuraEngine::Input
   {
     SDL_WarpMouseInWindow(InputNativeAPI::NativeWindow, x, y);
   }
+
+  void SetCursorPosition(const Vector2 &position)
+  {
+    SetCursorPosition(position.x, position.y);
+  }
 }

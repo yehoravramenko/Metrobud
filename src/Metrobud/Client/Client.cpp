@@ -3,15 +3,14 @@
 
 using namespace AuraEngine;
 
-constexpr float sensitivity = 0.1f;
-bool firstClick = true;
-Vector2 prevCursorPos{ 0, 0 };
-float yaw = 0.0f;
+constexpr float sensitivity = 0.15f;
+Vector2 cursorCenter{};
 float pitch = 0.0f;
+float yaw = 180.0f;
 
 constexpr float normalFOV = 60.0f;
 constexpr float zoomFOV = 20.0f;
-constexpr float zoomSpeed = 4.0f;
+constexpr float zoomSpeed = 3.0f;
 float zoomProgress = 0.0f;
 bool camZoomed = false;
 
@@ -19,6 +18,9 @@ namespace Metrobud
 {
   void Client::OnStart()
   {
+    cursorCenter = { this->GetWindowSize().width / 2.0f, this->GetWindowSize().height / 2.0f };
+    Input::SetCursorVisibility(false);
+    Input::SetCursorPosition(cursorCenter);
   }
 
   void Client::OnUpdate()
@@ -28,6 +30,11 @@ namespace Metrobud
       Application::Exit();
     }
 
+    this->UpdateCamera();
+  }
+
+  void Client::UpdateCamera()
+  {
     auto direction = Vector3(0.0f);
     auto &camFront = this->mainCamera->GetFront();
     auto &camUp = this->mainCamera->GetUp();
@@ -54,43 +61,28 @@ namespace Metrobud
 
     this->mainCamera->Translate(direction);
 
-    if(Input::GetMouseButton(MouseButton::Right))
+    auto cursorPos = Input::GetCursorPosition();
+
+    auto cursorDelta = (cursorPos - cursorCenter) * sensitivity;
+
+    yaw -= cursorDelta.x;
+    pitch += cursorDelta.y;
+
+    pitch = Math::Clamp(pitch, -89.0f, 89.0f);
+
+    if(yaw >= 360)
     {
-      auto cursorPos = Input::GetCursorPosition();
-
-      if(firstClick)
-      {
-        Input::SetCursorVisibility(false);
-        prevCursorPos = cursorPos;
-        firstClick = false;
-      }
-
-      auto cursorDelta = (cursorPos - prevCursorPos) * sensitivity;
-
-      yaw -= cursorDelta.x;
-      pitch += cursorDelta.y;
-
-      pitch = Math::Clamp(pitch, -89.0f, 89.0f);
-
-      if(yaw >= 360)
-      {
-        yaw -= 360;
-      }
-      else if(yaw <= -360)
-      {
-        yaw += 360;
-      }
-
-      Quaternion rotation{ Math::EulerAngles(pitch, yaw, 0.0f) };
-      this->mainCamera->Rotate(rotation);
-
-      prevCursorPos = cursorPos;
+      yaw -= 360;
     }
-    else
+    else if(yaw <= -360)
     {
-      Input::SetCursorVisibility(true);
-      firstClick = true;
+      yaw += 360;
     }
+
+    Quaternion rotation{ Math::EulerAngles(pitch, yaw, 0.0f) };
+    this->mainCamera->Rotate(rotation);
+
+    Input::SetCursorPosition(cursorCenter);
 
     if(Input::GetKey(KeyCode::B) && !camZoomed)
     {

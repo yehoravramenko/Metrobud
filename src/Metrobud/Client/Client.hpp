@@ -12,5 +12,8 @@ namespace Metrobud
     void OnUpdate() override;
     void OnDraw() override;
     void OnExit() override;
+
+  private:
+    void UpdateCamera();
   };
 } // namespace Metrobud

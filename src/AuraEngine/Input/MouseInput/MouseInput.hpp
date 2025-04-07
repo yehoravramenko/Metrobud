@@ -18,5 +18,6 @@ namespace AuraEngine
     AE_API const Vector2 GetCursorPosition();
     AE_API void SetCursorVisibility(const bool visible);
     AE_API void SetCursorPosition(const float x, const float y);
+    AE_API void SetCursorPosition(const Vector2 &position);
   }
 }

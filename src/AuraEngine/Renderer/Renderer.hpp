@@ -17,7 +17,7 @@ namespace AuraEngine
   class Renderer
   {
   public:
-    Renderer(const WindowSize windowSize);
+    Renderer(const WindowSize &windowSize);
     void Update();
     void Draw();
     AE_API ~Renderer();
@@ -35,5 +35,12 @@ namespace AuraEngine
     OpenGL::Texture testTex;
 
     Camera camera;
+  };
+
+  struct Vertex
+  {
+    Vector3 position;
+    //Vector3 normal;
+    Vector2 texCoord;
   };
 } // namespace AuraEngine
