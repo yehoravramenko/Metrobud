@@ -13,13 +13,9 @@ namespace AuraEngine
     this->engine->shouldExit = true;
   }
 
-  int Application::GetWindowWidth() const
+  const WindowSize &Application::GetWindowSize() const
   {
-    return this->engine->windowSize.width;
-  }
-  int Application::GetWindowHeight() const
-  {
-    return this->engine->windowSize.height;
+    return this->engine->window->GetSize();
   }
 
   const float Application::GetDeltaTime() const

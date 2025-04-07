@@ -9,10 +9,9 @@ namespace AuraEngine
     this->timeLast = 0;
     this->timeNow = SDL_GetPerformanceCounter();
 
-    this->windowSize = { 1280, 720 };
-    this->window = std::make_unique<Window>(this->windowSize, "Metrobud");
+    this->window = std::make_unique<Window>("Metrobud");
 
-    this->renderer = std::make_unique<Renderer>(this->windowSize);
+    this->renderer = std::make_unique<Renderer>(this->window->GetSize());
   }
 
   const float Engine::GetDeltaTime() const

@@ -25,7 +25,6 @@ namespace AuraEngine
     friend Application;
 
   private:
-    WindowSize windowSize;
     bool shouldExit = false;
 
     Uint64 timeNow, timeLast;

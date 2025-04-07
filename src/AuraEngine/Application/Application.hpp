@@ -3,6 +3,7 @@
 #include "Renderer/Camera.hpp"
 #include "../AuraEngine.hpp"
 #include "../Input/Input.hpp"
+#include "Window/Window.hpp"
 
 namespace AuraEngine
 {
@@ -18,8 +19,7 @@ namespace AuraEngine
 
     virtual ~Application() = default;
 
-    AE_API int GetWindowWidth() const;
-    AE_API int GetWindowHeight() const;
+    AE_API const WindowSize &GetWindowSize() const;
     AE_API const float GetDeltaTime() const;
 
   protected:

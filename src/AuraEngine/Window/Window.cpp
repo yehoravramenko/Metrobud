@@ -1,5 +1,6 @@
 #include "Window.hpp"
 #include "Debug/Debug.hpp"
+#include <stdio.h>
 #include "Input/Input.hpp"
 
 #include <SDL3/SDL.h>
@@ -9,7 +10,7 @@ namespace AuraEngine
 {
   SDL_Window *InputNativeAPI::NativeWindow;
 
-  Window::Window(WindowSize size, std::string_view title)
+  Window::Window(std::string_view title, WindowSize size)
   {
     if(!SDL_Init(SDL_INIT_VIDEO))
     {
@@ -24,8 +25,14 @@ namespace AuraEngine
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
-    unsigned int windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN;
-    this->handle = SDL_CreateWindow(title.data(), size.width, size.height, windowFlags);
+    auto dm = SDL_GetCurrentDisplayMode(1); // TODO: It's hardcoded first display, maybe it should be fixed . . .
+    this->size.width = dm->w;
+    this->size.height = dm->h;
+
+    // TODO: Implement window mode if size != {0, 0}
+
+    unsigned int windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS;
+    this->handle = SDL_CreateWindow(title.data(), this->size.width, this->size.height, windowFlags);
     if(this->handle == nullptr)
     {
       Debug::Error("Failed to create window");
@@ -41,7 +48,6 @@ namespace AuraEngine
 
     SDL_GL_MakeCurrent(this->handle, this->glContext);
     SDL_GL_SetSwapInterval(1);
-    SDL_ShowWindow(this->handle);
 
     if(!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
     {
@@ -74,5 +80,10 @@ namespace AuraEngine
     SDL_GL_DestroyContext(this->glContext);
     SDL_DestroyWindow(this->handle);
     SDL_Quit();
+  }
+
+  const WindowSize &Window::GetSize() const
+  {
+    return this->size;
   }
 } // namespace AuraEngine

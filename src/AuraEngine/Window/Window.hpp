@@ -13,9 +13,11 @@ namespace AuraEngine
   class Window
   {
   public:
-    Window(WindowSize size, std::string_view title);
+    Window(std::string_view title, WindowSize size = { 0,0 });
 
     void Update();
+
+    const WindowSize &GetSize() const;
 
     SDL_Window *const GetHandle() const
     {
@@ -27,6 +29,7 @@ namespace AuraEngine
     AE_API ~Window();
 
   private:
+    WindowSize size;
     SDL_Window *handle = nullptr;
     SDL_GLContext glContext;
     bool shouldExit = false;
